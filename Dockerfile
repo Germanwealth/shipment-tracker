@@ -22,8 +22,8 @@ RUN chown -R www-data:www-data /app && \
     mkdir -p storage/logs storage/framework/cache storage/framework/sessions storage/framework/views bootstrap/cache && \
     chown -R www-data:www-data storage bootstrap/cache
 
-# Create startup script to run migrations
-RUN echo '#!/bin/sh\nset -e\necho "Running database migrations..."\nphp artisan migrate --force\necho "Starting PHP-FPM..."\nexec php-fpm' > /entrypoint.sh && \
+# Create startup script to parse DATABASE_URL and run migrations
+RUN echo '#!/bin/sh\nset -e\necho "Creating .env file..."\ncp .env.example .env\necho "Setting production environment..."\nsed -i "s/APP_ENV=local/APP_ENV=production/" .env\nsed -i "s/APP_DEBUG=true/APP_DEBUG=false/" .env\necho "Running database migrations..."\nphp artisan migrate --force\necho "Starting PHP-FPM..."\nexec php-fpm' > /entrypoint.sh && \
     chmod +x /entrypoint.sh
 
 EXPOSE 9000
