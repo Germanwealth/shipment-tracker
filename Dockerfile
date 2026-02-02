@@ -21,6 +21,10 @@ RUN composer install --no-dev --no-interaction --prefer-dist --no-scripts -q
 RUN chown -R www-data:www-data /app && \
     mkdir -p storage/logs storage/framework/cache storage/framework/sessions storage/framework/views
 
+# Create startup script to run migrations
+RUN echo '#!/bin/sh\nset -e\necho "Running database migrations..."\nphp artisan migrate --force\necho "Starting PHP-FPM..."\nexec php-fpm' > /entrypoint.sh && \
+    chmod +x /entrypoint.sh
+
 EXPOSE 9000
 
-CMD ["php-fpm"]
+ENTRYPOINT ["/entrypoint.sh"]
