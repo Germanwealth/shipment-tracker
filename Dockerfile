@@ -46,7 +46,8 @@ sed -i 's/APP_DEBUG=.*/APP_DEBUG=false/' .env
 # Run migrations if DATABASE_URL is set
 if [ -n "$DATABASE_URL" ]; then
   echo "[$(date)] DATABASE_URL detected. Running migrations..."
-  php artisan migrate --force
+  # Use --fresh to drop and recreate all tables (cleans up stale schema)
+  php artisan migrate --force --fresh
   echo "[$(date)] Migrations completed successfully"
 else
   echo "[$(date)] DATABASE_URL not set, skipping migrations"
