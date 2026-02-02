@@ -45,9 +45,10 @@ sed -i 's/APP_DEBUG=.*/APP_DEBUG=false/' .env
 
 # Run migrations if DATABASE_URL is set
 if [ -n "$DATABASE_URL" ]; then
-  echo "[$(date)] DATABASE_URL detected. Testing database connection..."
-  php artisan tinker --execute="DB::connection()->getPdo(); echo 'Database connection successful!';"
-  echo "[$(date)] Skipping migrations for now - testing mode"
+  echo "[$(date)] DATABASE_URL detected. Wiping database and running migrations..."
+  php artisan db:wipe --force || true
+  php artisan migrate --force
+  echo "[$(date)] Migrations completed successfully"
 else
   echo "[$(date)] DATABASE_URL not set, skipping migrations"
 fi
