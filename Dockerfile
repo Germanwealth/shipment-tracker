@@ -50,7 +50,8 @@ server {
     }
 }
 NGINX
-    ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+
+RUN ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 
 # Create startup script
 RUN cat > /entrypoint.sh << 'EOF'
