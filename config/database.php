@@ -1,5 +1,14 @@
 <?php
 
+// Parse DATABASE_URL if provided (for Railway/Heroku compatibility)
+$url = parse_url(env('DATABASE_URL', ''));
+
+$db_host = $url['host'] ?? env('DB_HOST', 'localhost');
+$db_port = $url['port'] ?? env('DB_PORT', 5432);
+$db_database = ltrim($url['path'] ?? '', '/') ?: env('DB_DATABASE', 'shipment_tracker');
+$db_username = $url['user'] ?? env('DB_USERNAME', 'postgres');
+$db_password = $url['pass'] ?? env('DB_PASSWORD', '');
+
 return [
 
     /*
@@ -19,11 +28,11 @@ return [
     'connections' => [
         'pgsql' => [
             'driver' => 'pgsql',
-            'host' => env('DB_HOST', 'localhost'),
-            'port' => env('DB_PORT', 5432),
-            'database' => env('DB_DATABASE', 'shipment_tracker'),
-            'username' => env('DB_USERNAME', 'postgres'),
-            'password' => env('DB_PASSWORD', ''),
+            'host' => $db_host,
+            'port' => $db_port,
+            'database' => $db_database,
+            'username' => $db_username,
+            'password' => $db_password,
             'charset' => env('DB_CHARSET', 'utf8'),
             'prefix' => env('DB_PREFIX', ''),
             'prefix_indexes' => true,

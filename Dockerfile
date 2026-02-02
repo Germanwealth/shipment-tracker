@@ -33,25 +33,14 @@ echo "Setting production environment..."
 sed -i "s/APP_ENV=local/APP_ENV=production/" .env
 sed -i "s/APP_DEBUG=true/APP_DEBUG=false/" .env
 
-# Parse DATABASE_URL if provided
+# If DATABASE_URL is set, add it to .env
 if [ -n "$DATABASE_URL" ]; then
-  echo "Parsing DATABASE_URL..."
-  DB_HOST=$(echo $DATABASE_URL | sed -n 's/.*@\([^:]*\).*/\1/p')
-  DB_PORT=$(echo $DATABASE_URL | sed -n 's/.*:\([0-9]*\)\/.*/\1/p')
-  DB_DATABASE=$(echo $DATABASE_URL | sed -n 's/.*\/\([^?]*\).*/\1/p')
-  DB_USER=$(echo $DATABASE_URL | sed -n 's/.*:\/\/\([^:]*\).*/\1/p')
-  DB_PASSWORD=$(echo $DATABASE_URL | sed -n 's/.*:\/\/[^:]*:\([^@]*\).*/\1/p')
-  
-  sed -i "s/DB_HOST=.*/DB_HOST=$DB_HOST/" .env
-  sed -i "s/DB_PORT=.*/DB_PORT=$DB_PORT/" .env
-  sed -i "s/DB_DATABASE=.*/DB_DATABASE=$DB_DATABASE/" .env
-  sed -i "s/DB_USERNAME=.*/DB_USERNAME=$DB_USER/" .env
-  sed -i "s/DB_PASSWORD=.*/DB_PASSWORD=$DB_PASSWORD/" .env
-  echo "Database configuration updated from DATABASE_URL"
+  echo "DATABASE_URL environment variable detected"
+  echo "DATABASE_URL=$DATABASE_URL" >> .env
 fi
 
 echo "Running database migrations..."
-php artisan migrate --force || echo "Migrations may have already run"
+php artisan migrate --force || echo "Migrations already ran or connection issue"
 
 echo "Starting PHP-FPM..."
 exec php-fpm
