@@ -2,16 +2,16 @@ FROM php:8.3-fpm-bullseye
 
 WORKDIR /app
 
-# Install only essential system dependencies (fast)
+# Install system dependencies including nginx
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    libpq-dev postgresql-client \
+    libpq-dev postgresql-client nginx \
     && docker-php-ext-install pdo pdo_pgsql bcmath \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Copy Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Copy all app files first
+# Copy all app files
 COPY . .
 
 # Install PHP dependencies (quiet mode, no progress, no scripts)
@@ -25,7 +25,34 @@ RUN chown -R www-data:www-data /app && \
 # Copy env file
 COPY .env.example .env
 
-# Create startup script - production safe with verbose logging
+# Configure Nginx to forward to PHP-FPM
+RUN mkdir -p /etc/nginx/sites-available /etc/nginx/sites-enabled && \
+    cat > /etc/nginx/sites-available/default << 'NGINX'
+server {
+    listen 8080 default_server;
+    server_name _;
+    root /app/public;
+    index index.php index.html;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:9000;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+
+    location ~ /\. {
+        deny all;
+    }
+}
+NGINX
+    ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+
+# Create startup script
 RUN cat > /entrypoint.sh << 'EOF'
 #!/bin/sh
 set -e
@@ -45,20 +72,21 @@ sed -i 's/APP_DEBUG=.*/APP_DEBUG=false/' .env
 
 # Run migrations if DATABASE_URL is set
 if [ -n "$DATABASE_URL" ]; then
-  echo "[$(date)] DATABASE_URL detected. Wiping database and running migrations..."
-  php artisan db:wipe --force || true
+  echo "[$(date)] DATABASE_URL detected. Running migrations..."
   php artisan migrate --force
-  echo "[$(date)] Migrations completed successfully
   echo "[$(date)] Migrations completed successfully"
 else
   echo "[$(date)] DATABASE_URL not set, skipping migrations"
 fi
 
 echo "[$(date)] Starting PHP-FPM..."
-exec php-fpm
+php-fpm -D
+
+echo "[$(date)] Starting Nginx..."
+nginx -g "daemon off;"
 EOF
 RUN chmod +x /entrypoint.sh
 
-EXPOSE 9000
+EXPOSE 8080
 
 ENTRYPOINT ["/entrypoint.sh"]
