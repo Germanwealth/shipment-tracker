@@ -1,0 +1,17 @@
+.git
+.gitignore
+.env
+.env.local
+.env.*.local
+node_modules
+npm-debug.log
+storage/logs/*
+!storage/logs/.gitkeep
+bootstrap/cache/*
+!bootstrap/cache/.gitkeep
+.DS_Store
+.vscode
+.idea
+*.swp
+*.swo
+*~
