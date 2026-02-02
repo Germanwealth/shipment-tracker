@@ -17,9 +17,10 @@ COPY . .
 # Install PHP dependencies (quiet mode, no progress, no scripts)
 RUN composer install --no-dev --no-interaction --prefer-dist --no-scripts -q
 
-# Set permissions
+# Set permissions and create required directories
 RUN chown -R www-data:www-data /app && \
-    mkdir -p storage/logs storage/framework/cache storage/framework/sessions storage/framework/views
+    mkdir -p storage/logs storage/framework/cache storage/framework/sessions storage/framework/views bootstrap/cache && \
+    chown -R www-data:www-data storage bootstrap/cache
 
 # Create startup script to run migrations
 RUN echo '#!/bin/sh\nset -e\necho "Running database migrations..."\nphp artisan migrate --force\necho "Starting PHP-FPM..."\nexec php-fpm' > /entrypoint.sh && \
