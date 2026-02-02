@@ -18,6 +18,7 @@ Route::post('/test-post', function () {
 });
 
 // Public tracking routes
+Route::get('/', [PublicTrackingController::class, 'index'])->name('tracking.home');
 Route::get('/track', [PublicTrackingController::class, 'index'])->name('tracking.index');
 Route::get('/track/{code}', [PublicTrackingController::class, 'search'])->name('tracking.search');
 
