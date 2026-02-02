@@ -36,7 +36,6 @@ sed -i "s/APP_DEBUG=true/APP_DEBUG=false/" .env
 # Parse DATABASE_URL if provided
 if [ -n "$DATABASE_URL" ]; then
   echo "Parsing DATABASE_URL..."
-  # Extract components from postgresql://user:password@host:port/database
   DB_HOST=$(echo $DATABASE_URL | sed -n 's/.*@\([^:]*\).*/\1/p')
   DB_PORT=$(echo $DATABASE_URL | sed -n 's/.*:\([0-9]*\)\/.*/\1/p')
   DB_DATABASE=$(echo $DATABASE_URL | sed -n 's/.*\/\([^?]*\).*/\1/p')
@@ -57,7 +56,7 @@ php artisan migrate --force || echo "Migrations may have already run"
 echo "Starting PHP-FPM..."
 exec php-fpm
 EOF
-chmod +x /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 EXPOSE 9000
 
