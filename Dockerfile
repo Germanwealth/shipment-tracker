@@ -69,7 +69,7 @@ fi
 # Set production mode
 echo "[$(date)] Configuring production environment..."
 sed -i 's/APP_ENV=.*/APP_ENV=production/' .env
-sed -i 's/APP_DEBUG=.*/APP_DEBUG=false/' .env
+sed -i 's/APP_DEBUG=.*/APP_DEBUG=true/' .env
 
 # Run migrations if DATABASE_URL is set
 if [ -n "$DATABASE_URL" ]; then
