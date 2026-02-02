@@ -2,10 +2,10 @@ FROM php:8.3-fpm-bullseye
 
 WORKDIR /app
 
-# Install dependencies and PHP extensions
+# Install dependencies and PHP extensions (minimal - only what Laravel needs)
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl libpq-dev postgresql-client nginx supervisor \
-    && docker-php-ext-install pdo pdo_pgsql bcmath mbstring \
+    && docker-php-ext-install pdo pdo_pgsql bcmath \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Copy Composer
