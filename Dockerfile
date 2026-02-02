@@ -22,27 +22,35 @@ RUN chown -R www-data:www-data /app && \
     mkdir -p storage/logs storage/framework/cache storage/framework/sessions storage/framework/views bootstrap/cache && \
     chown -R www-data:www-data storage bootstrap/cache
 
-# Create startup script to parse DATABASE_URL and run migrations
+# Copy env file
+COPY .env.example .env
+
+# Create startup script - production safe
 RUN cat > /entrypoint.sh << 'EOF'
 #!/bin/sh
 set -e
-echo "Creating .env file..."
-cp .env.example .env
 
-echo "Setting production environment..."
-sed -i "s/APP_ENV=local/APP_ENV=production/" .env
-sed -i "s/APP_DEBUG=true/APP_DEBUG=false/" .env
+echo "[$(date)] Starting Shipment Tracker..."
 
-# If DATABASE_URL is set, add it to .env
-if [ -n "$DATABASE_URL" ]; then
-  echo "DATABASE_URL environment variable detected"
-  echo "DATABASE_URL=$DATABASE_URL" >> .env
+# Ensure APP_KEY is set
+if ! grep -q "^APP_KEY=" .env || [ -z "$(grep '^APP_KEY=' .env | cut -d= -f2)" ]; then
+  echo "[$(date)] Generating APP_KEY..."
+  php artisan key:generate --force
 fi
 
-echo "Running database migrations..."
-php artisan migrate --force || echo "Migrations already ran or connection issue"
+# Set production mode
+echo "[$(date)] Configuring production environment..."
+sed -i 's/APP_ENV=.*/APP_ENV=production/' .env
+sed -i 's/APP_DEBUG=.*/APP_DEBUG=false/' .env
 
-echo "Starting PHP-FPM..."
+# Optional: Run migrations if DATABASE_URL is set and migrations haven't run
+if [ -n "$DATABASE_URL" ]; then
+  echo "[$(date)] DATABASE_URL detected, attempting to run migrations..."
+  php artisan migrate --force 2>&1 | grep -E "^(Migrat|No|.*Error)" || true
+  echo "[$(date)] Migrations completed or skipped"
+fi
+
+echo "[$(date)] Starting PHP-FPM..."
 exec php-fpm
 EOF
 RUN chmod +x /entrypoint.sh
