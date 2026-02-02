@@ -11,14 +11,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Copy Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Copy only composer files first (for better caching)
-COPY composer.json composer.lock ./
-
-# Install PHP dependencies (skip scripts that hang)
-RUN composer install --no-dev --no-scripts --optimize-autoloader
-
-# Copy app code
+# Copy all app files first
 COPY . .
+
+# Install PHP dependencies (quiet mode, no progress, no scripts)
+RUN composer install --no-dev --no-interaction --prefer-dist --no-scripts -q
 
 # Set permissions
 RUN chown -R www-data:www-data /app && \
