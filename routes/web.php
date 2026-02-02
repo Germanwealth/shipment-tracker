@@ -17,6 +17,10 @@ Route::post('/test-post', function () {
     return response('POST OK', 200);
 });
 
+// Public tracking routes
+Route::get('/track', [PublicTrackingController::class, 'index'])->name('tracking.index');
+Route::get('/track/{code}', [PublicTrackingController::class, 'search'])->name('tracking.search');
+
 // Admin login GET
 Route::get('/admin/login', function () {
     error_log("Login page requested");
