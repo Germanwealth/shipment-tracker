@@ -48,6 +48,7 @@ if [ -n "$DATABASE_URL" ]; then
   echo "[$(date)] DATABASE_URL detected. Wiping database and running migrations..."
   php artisan db:wipe --force || true
   php artisan migrate --force
+  echo "[$(date)] Migrations completed successfully
   echo "[$(date)] Migrations completed successfully"
 else
   echo "[$(date)] DATABASE_URL not set, skipping migrations"
