@@ -9,7 +9,8 @@ RUN apk add --no-cache \
     libpq-dev \
     postgresql-client \
     nginx \
-    supervisor
+    supervisor \
+    oniguruma-dev
 
 # Install PHP extensions
 RUN docker-php-ext-install \
