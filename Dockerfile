@@ -80,6 +80,12 @@ else
   echo "[$(date)] DATABASE_URL not set, skipping migrations"
 fi
 
+# Cache config and views
+echo "[$(date)] Caching configuration..."
+php artisan config:cache || true
+echo "[$(date)] Caching views..."
+php artisan view:cache || true
+
 echo "[$(date)] Starting PHP-FPM..."
 php-fpm -D
 

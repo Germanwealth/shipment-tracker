@@ -7,16 +7,6 @@ use App\Http\Controllers\Auth\AdminAuthController;
 use App\Http\Controllers\AdminShipmentController;
 use App\Http\Controllers\PublicTrackingController;
 
-// Test route
-Route::get('/test', function () {
-    return response('OK', 200);
-});
-
-Route::post('/test-post', function () {
-    error_log("Test POST handler called");
-    return response('POST OK', 200);
-});
-
 // Public tracking routes
 Route::get('/', [PublicTrackingController::class, 'index'])->name('tracking.home');
 Route::get('/track', [PublicTrackingController::class, 'index'])->name('tracking.index');
