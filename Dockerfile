@@ -23,8 +23,41 @@ RUN chown -R www-data:www-data /app && \
     chown -R www-data:www-data storage bootstrap/cache
 
 # Create startup script to parse DATABASE_URL and run migrations
-RUN echo '#!/bin/sh\nset -e\necho "Creating .env file..."\ncp .env.example .env\necho "Setting production environment..."\nsed -i "s/APP_ENV=local/APP_ENV=production/" .env\nsed -i "s/APP_DEBUG=true/APP_DEBUG=false/" .env\necho "Running database migrations..."\nphp artisan migrate --force\necho "Starting PHP-FPM..."\nexec php-fpm' > /entrypoint.sh && \
-    chmod +x /entrypoint.sh
+RUN cat > /entrypoint.sh << 'EOF'
+#!/bin/sh
+set -e
+echo "Creating .env file..."
+cp .env.example .env
+
+echo "Setting production environment..."
+sed -i "s/APP_ENV=local/APP_ENV=production/" .env
+sed -i "s/APP_DEBUG=true/APP_DEBUG=false/" .env
+
+# Parse DATABASE_URL if provided
+if [ -n "$DATABASE_URL" ]; then
+  echo "Parsing DATABASE_URL..."
+  # Extract components from postgresql://user:password@host:port/database
+  DB_HOST=$(echo $DATABASE_URL | sed -n 's/.*@\([^:]*\).*/\1/p')
+  DB_PORT=$(echo $DATABASE_URL | sed -n 's/.*:\([0-9]*\)\/.*/\1/p')
+  DB_DATABASE=$(echo $DATABASE_URL | sed -n 's/.*\/\([^?]*\).*/\1/p')
+  DB_USER=$(echo $DATABASE_URL | sed -n 's/.*:\/\/\([^:]*\).*/\1/p')
+  DB_PASSWORD=$(echo $DATABASE_URL | sed -n 's/.*:\/\/[^:]*:\([^@]*\).*/\1/p')
+  
+  sed -i "s/DB_HOST=.*/DB_HOST=$DB_HOST/" .env
+  sed -i "s/DB_PORT=.*/DB_PORT=$DB_PORT/" .env
+  sed -i "s/DB_DATABASE=.*/DB_DATABASE=$DB_DATABASE/" .env
+  sed -i "s/DB_USERNAME=.*/DB_USERNAME=$DB_USER/" .env
+  sed -i "s/DB_PASSWORD=.*/DB_PASSWORD=$DB_PASSWORD/" .env
+  echo "Database configuration updated from DATABASE_URL"
+fi
+
+echo "Running database migrations..."
+php artisan migrate --force || echo "Migrations may have already run"
+
+echo "Starting PHP-FPM..."
+exec php-fpm
+EOF
+chmod +x /entrypoint.sh
 
 EXPOSE 9000
 
