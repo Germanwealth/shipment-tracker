@@ -18,7 +18,6 @@ RUN docker-php-ext-install \
     bcmath \
     ctype \
     fileinfo \
-    json \
     mbstring \
     tokenizer
 
