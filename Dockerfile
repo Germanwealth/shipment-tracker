@@ -25,7 +25,7 @@ RUN chown -R www-data:www-data /app && \
 # Copy env file
 COPY .env.example .env
 
-# Create startup script - production safe
+# Create startup script - production safe with verbose logging
 RUN cat > /entrypoint.sh << 'EOF'
 #!/bin/sh
 set -e
@@ -43,11 +43,13 @@ echo "[$(date)] Configuring production environment..."
 sed -i 's/APP_ENV=.*/APP_ENV=production/' .env
 sed -i 's/APP_DEBUG=.*/APP_DEBUG=false/' .env
 
-# Optional: Run migrations if DATABASE_URL is set and migrations haven't run
+# Run migrations if DATABASE_URL is set
 if [ -n "$DATABASE_URL" ]; then
-  echo "[$(date)] DATABASE_URL detected, attempting to run migrations..."
-  php artisan migrate --force 2>&1 | grep -E "^(Migrat|No|.*Error)" || true
-  echo "[$(date)] Migrations completed or skipped"
+  echo "[$(date)] DATABASE_URL detected. Running migrations..."
+  php artisan migrate --force
+  echo "[$(date)] Migrations completed successfully"
+else
+  echo "[$(date)] DATABASE_URL not set, skipping migrations"
 fi
 
 echo "[$(date)] Starting PHP-FPM..."
