@@ -112,6 +112,14 @@ rm -rf bootstrap/cache/*
 rm -rf storage/framework/cache/*
 rm -rf storage/framework/views/*
 
+# Run migrations
+echo "[$(date)] Running database migrations..."
+php artisan migrate --force 2>&1 || echo "Migrations already run"
+
+# Seed admin user if doesn't exist
+echo "[$(date)] Ensuring admin user exists..."
+php artisan db:seed --class=Database\\\\Seeders\\\\DatabaseSeeder 2>&1 || echo "Seeding skipped (may already be seeded)"
+
 echo "[$(date)] Starting PHP-FPM..."
 php-fpm -D
 
