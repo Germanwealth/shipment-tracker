@@ -7,7 +7,7 @@ use Illuminate\Foundation\Application;
 class Kernel
 {
     protected $middleware = [
-        \Illuminate\Http\Middleware\TrustProxies::class,
+        \App\Http\Middleware\TrustProxies::class,
         \Illuminate\Http\Middleware\HandleCors::class,
         \App\Http\Middleware\PreventRequestsDuringMaintenance::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,

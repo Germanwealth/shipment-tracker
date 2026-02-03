@@ -15,18 +15,11 @@ class VerifyCsrfToken extends Middleware
         'admin/login',
     ];
     
-    public function handle($request, \Closure $next)
+    public function getExcludedPaths()
     {
-        error_log(">>> CSRF Middleware called for " . $request->path());
-        // If the request path is in the except list, skip CSRF check
-        if (in_array($request->path(), $this->except)) {
-            error_log(">>> CSRF SKIPPED for " . $request->path());
-            return $next($request);
-        }
-        
-        error_log(">>> CSRF CHECK for " . $request->path());
-        // Otherwise call parent CSRF verification
-        return parent::handle($request, $next);
+        // Temporarily log and force admin/login to be excluded
+        error_log("=== getExcludedPaths called, returning: " . json_encode($this->except));
+        return array_merge($this->except, ['admin/login']);
     }
 }
 

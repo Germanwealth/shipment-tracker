@@ -9,7 +9,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function ($middleware) {
-        // Configure CSRF middleware to skip admin login
+        // Force HTTPS in production
+        if (config('app.env') === 'production') {
+            \Illuminate\Support\Facades\URL::forceScheme('https');
+        }
     })
     ->withExceptions(function ($exceptions) {
         // Log all exceptions to stderr so they appear in Docker logs
