@@ -75,15 +75,14 @@ fi
 # Override APP_KEY from environment if set
 if [ -n "$APP_KEY" ]; then
   echo "[$(date)] Setting APP_KEY from environment variable..."
-  sed -i "s/^APP_KEY=.*/APP_KEY=$APP_KEY/" .env
+  # Use | as delimiter instead of / to avoid issues with colons and slashes
+  sed -i "s|^APP_KEY=.*|APP_KEY=$APP_KEY|" .env
 fi
 
 # Override DATABASE_URL from environment if set
 if [ -n "$DATABASE_URL" ]; then
   echo "[$(date)] Setting DATABASE_URL from environment variable..."
-  # Escape special characters for sed
-  ESCAPED_URL=$(printf '%s\n' "$DATABASE_URL" | sed -e 's/[\/&]/\\&/g')
-  sed -i "s|^DATABASE_URL=.*|DATABASE_URL=$ESCAPED_URL|" .env
+  sed -i "s|^DATABASE_URL=.*|DATABASE_URL=$DATABASE_URL|" .env
 fi
 
 # Set production mode
