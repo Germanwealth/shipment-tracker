@@ -31,6 +31,11 @@ Route::get('/', function () {
 Route::get('/track', [PublicTrackingController::class, 'index'])->name('tracking.index');
 Route::get('/track/{code}', [PublicTrackingController::class, 'search'])->name('tracking.search');
 
+// Generic login route (redirects to admin.login for Laravel's exception handler)
+Route::get('/login', function () {
+    return redirect()->route('admin.login');
+})->name('login');
+
 // Admin login GET
 Route::get('/admin/login', function () {
     error_log("Login page requested");
