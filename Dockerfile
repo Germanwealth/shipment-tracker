@@ -74,7 +74,7 @@ fi
 
 # Ensure we're using the correct key
 echo "[$(date)] Setting explicit APP_KEY from base64 encoded value..."
-APP_KEY="base64:Uqw/jLJ3C0l7X9vF8pQ2R4sT5uV6wX7yZ8aB9cD0eF1gH2iJ3kL4mN5oP6qR7sT8u="
+APP_KEY="base64:9JM75AVRIhTFIFp20OmXTcKdYbDxVQMPSSEBvl1NDAs="
 sed -i "s|^APP_KEY=.*|APP_KEY=$APP_KEY|" .env
 
 # Also set from environment if Railway provides it (override if needed)
