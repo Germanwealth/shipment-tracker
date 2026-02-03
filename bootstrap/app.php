@@ -9,7 +9,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function ($middleware) {
-        // No custom middleware needed - Kernel will handle it
+        // Configure CSRF middleware to skip admin login
     })
     ->withExceptions(function ($exceptions) {
         // Log all exceptions to stderr so they appear in Docker logs

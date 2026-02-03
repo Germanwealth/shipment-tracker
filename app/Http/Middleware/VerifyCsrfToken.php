@@ -9,23 +9,23 @@ class VerifyCsrfToken extends Middleware
     /**
      * The URIs that should be excluded from CSRF verification.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $except = [
-        'admin/login',  // Allow login POST without CSRF (no leading slash)
+        'admin/login',
     ];
-
+    
     public function handle($request, \Closure $next)
     {
-        error_log("VerifyCsrfToken: Request path = '" . $request->path() . "' | isPost = " . ($request->isMethod('post') ? 'true' : 'false'));
-        
-        // Skip CSRF for login POST requests
-        if ($request->isMethod('post') && $request->path() === 'admin/login') {
-            error_log("VerifyCsrfToken: Skipping CSRF for admin/login POST");
+        error_log(">>> CSRF Middleware called for " . $request->path());
+        // If the request path is in the except list, skip CSRF check
+        if (in_array($request->path(), $this->except)) {
+            error_log(">>> CSRF SKIPPED for " . $request->path());
             return $next($request);
         }
         
-        // For all other requests, verify CSRF token
+        error_log(">>> CSRF CHECK for " . $request->path());
+        // Otherwise call parent CSRF verification
         return parent::handle($request, $next);
     }
 }

@@ -28,7 +28,32 @@ Route::get('/admin/login', function () {
     return view('auth.login');
 })->name('admin.login');
 
-// Admin login POST (without CSRF middleware)
+// Admin login POST (without CSRF middleware) - API style
+Route::post('/api/admin/login', function (Request $request) {
+    error_log("API Login POST handler called");
+    try {
+        error_log("API Login POST started");
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|string|min:8',
+        ]);
+        error_log("Credentials validated");
+        
+        if (Auth::guard('admin')->attempt($credentials, $request->filled('remember'))) {
+            error_log("Auth attempt successful");
+            $request->session()->regenerate();
+            return response()->json(['success' => true, 'redirect' => route('admin.shipments.index')]);
+        }
+        
+        error_log("Auth attempt failed");
+        return response()->json(['success' => false, 'message' => 'Invalid credentials'], 401);
+    } catch (\Exception $e) {
+        error_log("Login exception: " . $e->getMessage());
+        return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+    }
+})->name('admin.login.api')->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class);
+
+// Admin login POST (with CSRF for forms)
 Route::post('/admin/login', function (Request $request) {
     error_log("Login POST handler called");
     try {
