@@ -194,6 +194,7 @@ Route::get('/debug/create-test-shipment', function () {
 })->name('debug.create.test');
 
 // Admin routes (protected by auth middleware with CSRF for state-changing routes)
+// CSRF token automatically verified by web middleware group
 Route::middleware('auth:admin')->group(function () {
     Route::post('/admin/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
 
