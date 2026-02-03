@@ -97,25 +97,30 @@ Route::post('/admin/login', function (Request $request) {
     }
 })->name('admin.login.post');
 
-// Admin checker endpoint (for debugging)
+// Admin checker endpoint (for debugging) - AUTO-CREATE admin if none exists
 Route::get('/admin/check', function () {
-    $admins = \App\Models\Admin::all();
-    $count = count($admins);
-    
-    if ($count === 0) {
-        // Create default admin
-        \App\Models\Admin::create([
-            'name' => 'Admin User',
-            'email' => 'admin@example.com',
-            'password' => \Illuminate\Support\Facades\Hash::make('password123'),
+    try {
+        $admins = \App\Models\Admin::all();
+        $count = count($admins);
+        
+        if ($count === 0) {
+            // Create default admin
+            \App\Models\Admin::create([
+                'name' => 'Admin User',
+                'email' => 'admin@example.com',
+                'password' => \Illuminate\Support\Facades\Hash::make('password123'),
+            ]);
+            return response()->json(['message' => 'Created default admin', 'email' => 'admin@example.com', 'status' => 'created']);
+        }
+        
+        return response()->json([
+            'admin_count' => $count,
+            'admins' => $admins->map(fn($a) => ['email' => $a->email, 'name' => $a->name]),
+            'status' => 'exists'
         ]);
-        return response()->json(['message' => 'Created default admin', 'email' => 'admin@example.com']);
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
     }
-    
-    return response()->json([
-        'admin_count' => $count,
-        'admins' => $admins->map(fn($a) => ['email' => $a->email, 'name' => $a->name])
-    ]);
 })->name('admin.check');
 
 // Session/CSRF diagnostic endpoint
