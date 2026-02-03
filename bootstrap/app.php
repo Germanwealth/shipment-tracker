@@ -12,7 +12,14 @@ return Application::configure(basePath: dirname(__DIR__))
         // No custom middleware needed - Kernel will handle it
     })
     ->withExceptions(function ($exceptions) {
-        //
+        // Log all exceptions to stderr so they appear in Docker logs
+        $exceptions->render(function (Throwable $e) {
+            error_log("LARAVEL EXCEPTION: " . get_class($e));
+            error_log("Message: " . $e->getMessage());
+            error_log("File: " . $e->getFile() . ":" . $e->getLine());
+            error_log("Trace: " . $e->getTraceAsString());
+            return null; // Let Laravel handle the response
+        });
     })
     ->create();
 

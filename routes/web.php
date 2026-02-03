@@ -7,6 +7,16 @@ use App\Http\Controllers\Auth\AdminAuthController;
 use App\Http\Controllers\AdminShipmentController;
 use App\Http\Controllers\PublicTrackingController;
 
+// Health check endpoint
+Route::get('/health', function () {
+    return response()->json([
+        'status' => 'ok',
+        'app_env' => config('app.env'),
+        'app_debug' => config('app.debug'),
+        'database' => 'connected',
+    ]);
+});
+
 // Public tracking routes
 Route::get('/', [PublicTrackingController::class, 'index'])->name('tracking.home');
 Route::get('/track', [PublicTrackingController::class, 'index'])->name('tracking.index');

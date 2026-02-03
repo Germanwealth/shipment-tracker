@@ -98,6 +98,10 @@ php artisan view:cache 2>&1 || echo "Warning: View cache failed"
 echo "[$(date)] Testing database connection..."
 php artisan db:show --json 2>&1 || echo "Warning: Database test failed (will retry on first request)"
 
+# Try to run a simple Artisan command to check if everything works
+echo "[$(date)] Running health check..."
+php artisan route:list 2>&1 | head -5 || echo "Warning: Route list failed"
+
 echo "[$(date)] Starting PHP-FPM..."
 php-fpm -D
 
