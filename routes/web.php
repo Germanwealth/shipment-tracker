@@ -27,11 +27,11 @@ Route::get('/', function () {
     return view('public.home');
 })->name('home');
 
-// Public tracking routes
+// Public tracking routes - handles both /track and /track?code= formats
 Route::get('/track', function (Request $request) {
     // If code parameter is provided, redirect to path parameter format
     if ($request->has('code')) {
-        return redirect('/track/' . $request->query('code'));
+        return redirect('/track/' . strtoupper(trim($request->query('code'))));
     }
     // Otherwise show the tracking search page
     return app(PublicTrackingController::class)->index();
