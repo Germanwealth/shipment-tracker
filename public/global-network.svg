@@ -1,0 +1,47 @@
+<svg viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient simulation -->
+  <defs>
+    <linearGradient id="globeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0284c7;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#003d82;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Globe/World Map -->
+  <circle cx="200" cy="150" r="120" fill="url(#globeGrad)" stroke="#1e40af" stroke-width="2"/>
+  
+  <!-- Continents (simplified) -->
+  <!-- Africa -->
+  <path d="M180 120 L190 115 L200 120 L205 140 L200 155 L185 145 Z" fill="#10b981" opacity="0.8"/>
+  
+  <!-- Europe -->
+  <path d="M200 100 L210 105 L215 110 L210 120 L205 115 Z" fill="#10b981" opacity="0.8"/>
+  
+  <!-- Asia -->
+  <path d="M220 110 L240 100 L250 120 L245 140 L225 130 Z" fill="#10b981" opacity="0.8"/>
+  
+  <!-- Americas -->
+  <path d="M140 130 L150 125 L155 145 L148 155 L140 150 Z" fill="#10b981" opacity="0.8"/>
+  
+  <!-- Shipping routes (dotted lines) -->
+  <path d="M150 140 Q200 120 250 140" fill="none" stroke="#fbbf24" stroke-width="2" stroke-dasharray="5,5" opacity="0.7"/>
+  <path d="M160 160 Q200 180 240 160" fill="none" stroke="#fbbf24" stroke-width="2" stroke-dasharray="5,5" opacity="0.7"/>
+  
+  <!-- Connection points (cities) -->
+  <circle cx="155" cy="145" r="6" fill="#ff8c00"/>
+  <circle cx="200" cy="125" r="6" fill="#ff8c00"/>
+  <circle cx="245" cy="140" r="6" fill="#ff8c00"/>
+  <circle cx="175" cy="165" r="6" fill="#ff8c00"/>
+  <circle cx="230" cy="165" r="6" fill="#ff8c00"/>
+  
+  <!-- Ship icon on route -->
+  <g transform="translate(200, 140)">
+    <path d="M-15 0 L15 0 L10 10 L-10 10 Z" fill="#fbbf24" stroke="#ff8c00" stroke-width="1"/>
+    <path d="M0 0 L0 -15 L5 -5 L-5 -5 Z" fill="#ff8c00"/>
+  </g>
+  
+  <!-- Location pins -->
+  <circle cx="155" cy="145" r="3" fill="white"/>
+  <circle cx="200" cy="125" r="3" fill="white"/>
+  <circle cx="245" cy="140" r="3" fill="white"/>
+</svg>

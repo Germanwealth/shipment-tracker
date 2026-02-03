@@ -1,8 +1,6 @@
-@extends('layouts.public')
+<?php $__env->startSection('title', 'Nuelcargo - Global Shipping & Logistics Solutions'); ?>
 
-@section('title', 'Nuelcargo - Global Shipping & Logistics Solutions')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <!-- Hero Section -->
 <section id="home" class="bg-gradient-to-r from-blue-900 to-blue-800 text-white py-20">
@@ -17,7 +15,18 @@
         </div>
         <div class="md:w-1/2">
             <div class="relative">
-                <img src="{{ asset('shipping-container.svg') }}" alt="Nuelcargo Shipping Container" class="w-full h-auto drop-shadow-lg">
+                <svg class="w-full h-auto" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Shipping container illustration -->
+                    <rect x="50" y="100" width="300" height="150" fill="#ff8c00" rx="5"/>
+                    <rect x="60" y="110" width="280" height="130" fill="#ffa500" rx="3"/>
+                    <line x1="70" y1="145" x2="370" y2="145" stroke="white" stroke-width="2"/>
+                    <line x1="70" y1="175" x2="370" y2="175" stroke="white" stroke-width="2"/>
+                    <circle cx="100" cy="260" r="15" fill="#333"/>
+                    <circle cx="300" cy="260" r="15" fill="#333"/>
+                    <!-- Globe -->
+                    <circle cx="350" cy="80" r="35" fill="#003d82" opacity="0.8"/>
+                    <path d="M325 80 Q350 60 375 80" stroke="#ff8c00" stroke-width="2" fill="none"/>
+                </svg>
             </div>
         </div>
     </div>
@@ -202,7 +211,14 @@
                 </a>
             </div>
             <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-12 flex items-center justify-center h-96">
-                <img src="{{ asset('global-network.svg') }}" alt="Global Network Map" class="w-full h-full object-contain">
+                <svg class="w-full h-auto" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- World map illustration -->
+                    <circle cx="200" cy="150" r="120" fill="#e0f2fe" stroke="#003d82" stroke-width="2"/>
+                    <path d="M140 150 L180 130 L200 140 L220 120 L240 140" fill="none" stroke="#003d82" stroke-width="2"/>
+                    <circle cx="150" cy="170" r="8" fill="#ff8c00"/>
+                    <circle cx="250" cy="140" r="8" fill="#ff8c00"/>
+                    <circle cx="200" cy="180" r="8" fill="#ff8c00"/>
+                </svg>
             </div>
         </div>
     </div>
@@ -224,4 +240,6 @@
     </div>
 </section>
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.public', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH /home/codecps/Desktop/tracker/resources/views/public/home.blade.php ENDPATH**/ ?>
