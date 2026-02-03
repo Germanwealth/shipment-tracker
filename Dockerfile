@@ -75,7 +75,9 @@ fi
 # Override APP_KEY from environment if set (MUST be before config:cache)
 if [ -n "$APP_KEY" ]; then
   echo "[$(date)] Setting APP_KEY from environment variable..."
-  sed -i "s|^APP_KEY=.*|APP_KEY=$APP_KEY|" .env
+  # Use a marker to ensure this works
+  grep -q "^APP_KEY=" .env && sed -i "s|^APP_KEY=.*|APP_KEY=$APP_KEY|" .env || echo "APP_KEY=$APP_KEY" >> .env
+  echo "APP_KEY is now: $(grep 'APP_KEY=' .env)"
 fi
 
 # Override DATABASE_URL from environment if set (MUST be before config:cache)
@@ -94,13 +96,16 @@ echo "[$(date)] Setting permissions..."
 chmod -R 777 storage bootstrap/cache
 chown -R www-data:www-data storage bootstrap/cache
 
-# Clear any old cache files
+# Clear any old cache files (this is critical!)
 rm -rf bootstrap/cache/config.php
 rm -rf storage/framework/cache/*
 
-# NOW cache config and views (AFTER environment variables are set)
-echo "[$(date)] Caching configuration..."
-php artisan config:cache 2>&1 || echo "Warning: Config cache failed"
+# SKIP config caching - let Laravel read directly from .env
+# This ensures fresh environment variables are always used
+echo "[$(date)] Skipping config cache to use fresh environment..."
+# php artisan config:cache 2>&1 || echo "Warning: Config cache failed"
+
+# Cache views only
 echo "[$(date)] Caching views..."
 php artisan view:cache 2>&1 || echo "Warning: View cache failed"
 
