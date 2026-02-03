@@ -60,31 +60,28 @@ set -e
 
 echo "[$(date)] Starting Shipment Tracker..."
 
+# Copy .env.example to .env if .env doesn't exist
+if [ ! -f .env ]; then
+  echo "[$(date)] Creating .env from .env.example..."
+  cp .env.example .env
+fi
+
 # Ensure APP_KEY is set
-if ! grep -q "^APP_KEY=" .env || [ -z "$(grep '^APP_KEY=' .env | cut -d= -f2)" ]; then
+if ! grep -q "APP_KEY=" .env || grep -q "^APP_KEY=$" .env; then
   echo "[$(date)] Generating APP_KEY..."
   php artisan key:generate --force
 fi
 
 # Set production mode
 echo "[$(date)] Configuring production environment..."
-sed -i 's/APP_ENV=.*/APP_ENV=production/' .env
-sed -i 's/APP_DEBUG=.*/APP_DEBUG=true/' .env
-
-# Run migrations if DATABASE_URL is set
-if [ -n "$DATABASE_URL" ]; then
-  echo "[$(date)] DATABASE_URL detected. Running migrations..."
-  php artisan migrate --force
-  echo "[$(date)] Migrations completed successfully"
-else
-  echo "[$(date)] DATABASE_URL not set, skipping migrations"
-fi
+sed -i 's/^APP_ENV=.*/APP_ENV=production/' .env
+sed -i 's/^APP_DEBUG=.*/APP_DEBUG=false/' .env
 
 # Cache config and views
 echo "[$(date)] Caching configuration..."
-php artisan config:cache || true
+php artisan config:cache
 echo "[$(date)] Caching views..."
-php artisan view:cache || true
+php artisan view:cache
 
 echo "[$(date)] Starting PHP-FPM..."
 php-fpm -D

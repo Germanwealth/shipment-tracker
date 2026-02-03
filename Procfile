@@ -1,6 +1,2 @@
-[buildpacks]
-provider = "heroku/php"
-
-[env]
-APP_ENV = "production"
-LOG_CHANNEL = "single"
+release: php artisan migrate --force
+web: sh -c 'php-fpm -D && nginx -g "daemon off;"'
