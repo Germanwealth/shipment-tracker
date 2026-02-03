@@ -58,6 +58,27 @@ Route::post('/admin/login', function (Request $request) {
     }
 })->name('admin.login.post');
 
+// Admin checker endpoint (for debugging)
+Route::get('/admin/check', function () {
+    $admins = \App\Models\Admin::all();
+    $count = count($admins);
+    
+    if ($count === 0) {
+        // Create default admin
+        \App\Models\Admin::create([
+            'name' => 'Admin User',
+            'email' => 'admin@example.com',
+            'password' => \Illuminate\Support\Facades\Hash::make('password123'),
+        ]);
+        return response()->json(['message' => 'Created default admin', 'email' => 'admin@example.com']);
+    }
+    
+    return response()->json([
+        'admin_count' => $count,
+        'admins' => $admins->map(fn($a) => ['email' => $a->email, 'name' => $a->name])
+    ]);
+})->name('admin.check');
+
 // Admin routes (protected by auth middleware)
 Route::middleware('auth:admin')->group(function () {
     Route::post('/admin/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
