@@ -14,13 +14,6 @@ class VerifyCsrfToken extends Middleware
     protected $except = [
         'admin/login',
     ];
-    
-    public function getExcludedPaths()
-    {
-        // Temporarily log and force admin/login to be excluded
-        error_log("=== getExcludedPaths called, returning: " . json_encode($this->except));
-        return array_merge($this->except, ['admin/login']);
-    }
 }
 
 

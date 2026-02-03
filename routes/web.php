@@ -86,7 +86,10 @@ Route::post('/admin/login', function (Request $request) {
             'email' => 'An error occurred: ' . $e->getMessage(),
         ]);
     }
-})->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class)->name('admin.login.post');
+})->withoutMiddleware([
+    \App\Http\Middleware\VerifyCsrfToken::class,
+    \Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class,
+])->name('admin.login.post');
 
 // Admin checker endpoint (for debugging)
 Route::get('/admin/check', function () {
