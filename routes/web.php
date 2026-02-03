@@ -19,6 +19,7 @@ Route::get('/health', function () {
         'app_env' => config('app.env'),
         'app_debug' => config('app.debug'),
         'database' => 'connected',
+        'timestamp' => now(),
     ]);
 });
 
