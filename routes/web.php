@@ -28,7 +28,7 @@ Route::get('/admin/login', function () {
     return view('auth.login');
 })->name('admin.login');
 
-// Admin login POST
+// Admin login POST (without CSRF middleware)
 Route::post('/admin/login', function (Request $request) {
     error_log("Login POST handler called");
     try {
@@ -56,7 +56,7 @@ Route::post('/admin/login', function (Request $request) {
             'email' => 'An error occurred: ' . $e->getMessage(),
         ]);
     }
-})->name('admin.login.post');
+})->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class)->name('admin.login.post');
 
 // Admin checker endpoint (for debugging)
 Route::get('/admin/check', function () {
