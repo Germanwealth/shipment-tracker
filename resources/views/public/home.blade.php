@@ -17,7 +17,7 @@
         </div>
         <div class="md:w-1/2">
             <div class="relative">
-                <img src="{{ asset('shipping-container.svg') }}" alt="Nuelcargo Shipping Container" class="w-full h-auto drop-shadow-lg">
+                <img src="{{ asset('shipping.webp') }}" alt="Nuelcargo Shipping Container" class="w-full h-auto rounded-lg drop-shadow-lg">
             </div>
         </div>
     </div>
@@ -201,8 +201,8 @@
                     Contact Us Today
                 </a>
             </div>
-            <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-12 flex items-center justify-center h-96">
-                <img src="{{ asset('global-network.svg') }}" alt="Global Network Map" class="w-full h-full object-contain">
+            <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4 flex items-center justify-center h-96 overflow-hidden">
+                <img src="{{ asset('shipping2.webp') }}" alt="Global Network Shipping" class="w-full h-full object-cover rounded-lg">
             </div>
         </div>
     </div>
