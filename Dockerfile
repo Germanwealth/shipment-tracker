@@ -63,7 +63,8 @@ RUN cat > /entrypoint.sh << 'EOF'
 #!/bin/sh
 set -e
 
-echo "[$(date)] Starting Shipment Tracker..."
+echo "[$(date)] Starting Shipment Tracker on Railway..."
+echo "[$(date)] Working directory: $(pwd)"
 
 # Copy .env.example to .env if .env doesn't exist
 if [ ! -f .env ]; then
@@ -71,63 +72,45 @@ if [ ! -f .env ]; then
   cp .env.example .env
 fi
 
-# Read all environment variables and write to .env
-echo "[$(date)] Updating .env with environment variables..."
+# Ensure we're using the correct key
+echo "[$(date)] Setting explicit APP_KEY from base64 encoded value..."
+APP_KEY="base64:Uqw/jLJ3C0l7X9vF8pQ2R4sT5uV6wX7yZ8aB9cD0eF1gH2iJ3kL4mN5oP6qR7sT8u="
+sed -i "s|^APP_KEY=.*|APP_KEY=$APP_KEY|" .env
 
-# Function to update or add env variable
-update_env() {
-  key=$1
-  value=$2
-  if grep -q "^$key=" .env; then
-    # Update existing
-    sed -i "s|^$key=.*|$key=$value|" .env
-    echo "  Updated: $key"
-  else
-    # Add new
-    echo "$key=$value" >> .env
-    echo "  Added: $key"
-  fi
-}
+# Also set from environment if Railway provides it (override if needed)
+if [ -n "$RAILWAY_APP_KEY" ]; then
+  echo "[$(date)] Using Railway-provided APP_KEY from RAILWAY_APP_KEY..."
+  sed -i "s|^APP_KEY=.*|APP_KEY=$RAILWAY_APP_KEY|" .env
+fi
 
-# Update variables from environment
-echo "[$(date)] Environment vars before update:"
-echo "  APP_KEY env: $([ -n "$APP_KEY" ] && echo 'SET' || echo 'NOT SET')"
-echo "  DATABASE_URL env: $([ -n "$DATABASE_URL" ] && echo 'SET' || echo 'NOT SET')"
+# Ensure .env has these critical settings
+echo "[$(date)] Setting production environment variables..."
+sed -i 's/^APP_ENV=.*/APP_ENV=production/' .env || echo "APP_ENV=production" >> .env
+sed -i 's/^APP_DEBUG=.*/APP_DEBUG=false/' .env || echo "APP_DEBUG=false" >> .env
 
-[ -n "$APP_KEY" ] && update_env "APP_KEY" "$APP_KEY"
-[ -n "$APP_ENV" ] && update_env "APP_ENV" "$APP_ENV"
-[ -n "$APP_DEBUG" ] && update_env "APP_DEBUG" "$APP_DEBUG"
-[ -n "$APP_URL" ] && update_env "APP_URL" "$APP_URL"
-[ -n "$LOG_LEVEL" ] && update_env "LOG_LEVEL" "$LOG_LEVEL"
-[ -n "$DATABASE_URL" ] && update_env "DATABASE_URL" "$DATABASE_URL"
+# Override database URL from Railway environment if set
+if [ -n "$DATABASE_URL" ]; then
+  echo "[$(date)] Using Railway DATABASE_URL..."
+  sed -i "s|^DATABASE_URL=.*|DATABASE_URL=$DATABASE_URL|" .env || echo "DATABASE_URL=$DATABASE_URL" >> .env
+fi
 
-# Force production and debug mode
-sed -i 's/^APP_ENV=.*/APP_ENV=production/' .env
-sed -i 's/^APP_DEBUG=.*/APP_DEBUG=true/' .env
-
-# Log what we have now
-echo "[$(date)] .env APP_KEY after update:"
-grep "^APP_KEY=" .env || echo "  APP_KEY NOT FOUND IN .env!"
+# Log the critical settings (don't log the actual key!)
+echo "[$(date)] Critical settings:"
+grep "^APP_ENV=" .env || echo "  APP_ENV not found"
+grep "^APP_DEBUG=" .env || echo "  APP_DEBUG not found"
+grep "^APP_KEY=" .env | sed 's/=.*$/=***/' || echo "  APP_KEY not found"
+grep "^DATABASE_" .env | head -1 || echo "  DATABASE not found"
 
 # Ensure storage and bootstrap directories are writable
 echo "[$(date)] Setting permissions..."
 chmod -R 777 storage bootstrap/cache
 chown -R www-data:www-data storage bootstrap/cache
 
-# Clear old cache files
-rm -rf bootstrap/cache/config.php
+# Clear any old cache files that might have wrong keys
+echo "[$(date)] Clearing old cache files..."
+rm -rf bootstrap/cache/*
 rm -rf storage/framework/cache/*
-
-# Skip all caching - use fresh environment
-echo "[$(date)] Skipping config and view caching - will use dynamic caching..."
-
-# Test database connection
-echo "[$(date)] Testing database connection..."
-php artisan db:show --json 2>&1 || echo "Warning: Database test failed"
-
-# Try to verify views directory
-echo "[$(date)] Verifying views directory..."
-ls -la storage/framework/views/ 2>/dev/null | head -5 || echo "No view cache yet"
+rm -rf storage/framework/views/*
 
 echo "[$(date)] Starting PHP-FPM..."
 php-fpm -D
