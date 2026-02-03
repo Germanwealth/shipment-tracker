@@ -125,16 +125,22 @@ Route::get('/admin/session-check', function () {
     ]);
 })->name('admin.session.check');
 
-// Admin routes (protected by auth middleware and CSRF protection)
-Route::middleware(['auth:admin', \App\Http\Middleware\VerifyCsrfToken::class])->group(function () {
-    Route::post('/admin/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
+// Admin routes (protected by auth middleware)
+Route::middleware('auth:admin')->group(function () {
+    Route::post('/admin/logout', [AdminAuthController::class, 'logout'])->middleware(\App\Http\Middleware\VerifyCsrfToken::class)->name('admin.logout');
 
     Route::prefix('admin')->name('admin.')->group(function () {
         // Shipment management
-        Route::resource('shipments', AdminShipmentController::class);
+        Route::get('shipments', [AdminShipmentController::class, 'index'])->name('shipments.index');
+        Route::get('shipments/create', [AdminShipmentController::class, 'create'])->name('shipments.create');
+        Route::post('shipments', [AdminShipmentController::class, 'store'])->middleware(\App\Http\Middleware\VerifyCsrfToken::class)->name('shipments.store');
+        Route::get('shipments/{shipment}', [AdminShipmentController::class, 'show'])->name('shipments.show');
+        Route::get('shipments/{shipment}/edit', [AdminShipmentController::class, 'edit'])->name('shipments.edit');
+        Route::put('shipments/{shipment}', [AdminShipmentController::class, 'update'])->middleware(\App\Http\Middleware\VerifyCsrfToken::class)->name('shipments.update');
+        Route::delete('shipments/{shipment}', [AdminShipmentController::class, 'destroy'])->middleware(\App\Http\Middleware\VerifyCsrfToken::class)->name('shipments.destroy');
 
         // Tracking updates
         Route::get('shipments/{shipment}/updates', [AdminShipmentController::class, 'showUpdates'])->name('shipments.updates');
-        Route::post('shipments/{shipment}/updates', [AdminShipmentController::class, 'storeUpdate'])->name('shipments.updates.store');
+        Route::post('shipments/{shipment}/updates', [AdminShipmentController::class, 'storeUpdate'])->middleware(\App\Http\Middleware\VerifyCsrfToken::class)->name('shipments.updates.store');
     });
 });
