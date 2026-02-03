@@ -16,7 +16,7 @@
 
         <!-- Search Form -->
         <div class="bg-white rounded-lg shadow-xl p-8">
-            <form action="{{ route('tracking.search', '') }}" method="GET" onsubmit="handleSearch(event)" class="space-y-4">
+            <form method="GET" onsubmit="handleSearch(event)" class="space-y-4">
                 <div>
                     <label for="tracking_code" class="block text-sm font-semibold text-gray-700 mb-2">Enter Tracking Code</label>
                     <div class="relative">
@@ -65,7 +65,7 @@ function handleSearch(e) {
     e.preventDefault();
     const code = document.getElementById('tracking_code').value.trim().toUpperCase();
     if (code) {
-        window.location.href = `{{ route('tracking.search', '') }}/${code}`;
+        window.location.href = `/track/${code}`;
     }
 }
 </script>
