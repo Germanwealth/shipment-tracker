@@ -15,18 +15,7 @@
         </div>
         <div class="md:w-1/2">
             <div class="relative">
-                <svg class="w-full h-auto" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Shipping container illustration -->
-                    <rect x="50" y="100" width="300" height="150" fill="#ff8c00" rx="5"/>
-                    <rect x="60" y="110" width="280" height="130" fill="#ffa500" rx="3"/>
-                    <line x1="70" y1="145" x2="370" y2="145" stroke="white" stroke-width="2"/>
-                    <line x1="70" y1="175" x2="370" y2="175" stroke="white" stroke-width="2"/>
-                    <circle cx="100" cy="260" r="15" fill="#333"/>
-                    <circle cx="300" cy="260" r="15" fill="#333"/>
-                    <!-- Globe -->
-                    <circle cx="350" cy="80" r="35" fill="#003d82" opacity="0.8"/>
-                    <path d="M325 80 Q350 60 375 80" stroke="#ff8c00" stroke-width="2" fill="none"/>
-                </svg>
+                <img src="<?php echo e(asset('shipping.webp')); ?>" alt="Nuelcargo Shipping Container" class="w-full h-auto rounded-lg drop-shadow-lg">
             </div>
         </div>
     </div>
@@ -210,15 +199,8 @@
                     Contact Us Today
                 </a>
             </div>
-            <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-12 flex items-center justify-center h-96">
-                <svg class="w-full h-auto" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <!-- World map illustration -->
-                    <circle cx="200" cy="150" r="120" fill="#e0f2fe" stroke="#003d82" stroke-width="2"/>
-                    <path d="M140 150 L180 130 L200 140 L220 120 L240 140" fill="none" stroke="#003d82" stroke-width="2"/>
-                    <circle cx="150" cy="170" r="8" fill="#ff8c00"/>
-                    <circle cx="250" cy="140" r="8" fill="#ff8c00"/>
-                    <circle cx="200" cy="180" r="8" fill="#ff8c00"/>
-                </svg>
+            <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4 flex items-center justify-center h-96 overflow-hidden">
+                <img src="<?php echo e(asset('shipping2.webp')); ?>" alt="Global Network Shipping" class="w-full h-full object-cover rounded-lg">
             </div>
         </div>
     </div>
