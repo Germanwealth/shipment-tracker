@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.public')
 
-@section('title', 'Tracking Code Not Found')
+@section('title', 'Tracking Code Not Found - Nuelcargo')
 
 @section('content')
 <div class="min-h-screen bg-gray-50 flex items-center justify-center p-4">

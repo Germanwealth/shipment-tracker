@@ -1,0 +1,245 @@
+@extends('layouts.public')
+
+@section('title', 'Nuelcargo - Global Shipping & Logistics Solutions')
+
+@section('content')
+
+<!-- Hero Section -->
+<section id="home" class="bg-gradient-to-r from-blue-900 to-blue-800 text-white py-20">
+    <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
+        <div class="md:w-1/2 mb-10 md:mb-0">
+            <h1 class="text-5xl font-bold mb-4">Your Global Logistics Partner</h1>
+            <p class="text-xl text-gray-100 mb-8">Reliable, secure, and affordable shipping solutions to over 150 countries. Track your shipments in real-time.</p>
+            <div class="flex space-x-4">
+                <a href="#track" class="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-bold transition">Track Now</a>
+                <a href="#services" class="border-2 border-white hover:bg-white hover:text-blue-900 text-white px-8 py-3 rounded-lg font-bold transition">Learn More</a>
+            </div>
+        </div>
+        <div class="md:w-1/2">
+            <div class="relative">
+                <svg class="w-full h-auto" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Shipping container illustration -->
+                    <rect x="50" y="100" width="300" height="150" fill="#ff8c00" rx="5"/>
+                    <rect x="60" y="110" width="280" height="130" fill="#ffa500" rx="3"/>
+                    <line x1="70" y1="145" x2="370" y2="145" stroke="white" stroke-width="2"/>
+                    <line x1="70" y1="175" x2="370" y2="175" stroke="white" stroke-width="2"/>
+                    <circle cx="100" cy="260" r="15" fill="#333"/>
+                    <circle cx="300" cy="260" r="15" fill="#333"/>
+                    <!-- Globe -->
+                    <circle cx="350" cy="80" r="35" fill="#003d82" opacity="0.8"/>
+                    <path d="M325 80 Q350 60 375 80" stroke="#ff8c00" stroke-width="2" fill="none"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Quick Track Section -->
+<section id="track" class="bg-gray-50 py-12">
+    <div class="container mx-auto px-4 max-w-2xl">
+        <h2 class="text-3xl font-bold text-center mb-8 nuelcargo-blue">Track Your Shipment</h2>
+        <form action="/track" method="GET" class="bg-white p-8 rounded-lg shadow-lg">
+            <div class="flex flex-col md:flex-row gap-3">
+                <input type="text" name="code" placeholder="Enter tracking code (e.g., TRK-ABC123)" class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-900" required>
+                <button type="submit" class="bg-nuelcargo-blue hover:bg-blue-800 text-white px-8 py-3 rounded-lg font-bold transition">
+                    <i class="fas fa-search mr-2"></i>Search
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section id="services" class="py-20">
+    <div class="container mx-auto px-4">
+        <h2 class="text-4xl font-bold text-center mb-4 nuelcargo-blue">Our Services</h2>
+        <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">Comprehensive logistics solutions tailored to your business needs</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Service 1 -->
+            <div class="bg-white rounded-lg shadow-lg p-8 hover-lift">
+                <div class="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                    <i class="fas fa-box text-2xl nuelcargo-blue"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3 nuelcargo-blue">Express Parcel Delivery</h3>
+                <p class="text-gray-600">Fast door-to-door shipping for packages and e-commerce orders with real-time tracking</p>
+            </div>
+            
+            <!-- Service 2 -->
+            <div class="bg-white rounded-lg shadow-lg p-8 hover-lift">
+                <div class="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                    <i class="fas fa-ship text-2xl nuelcargo-blue"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3 nuelcargo-blue">Freight Forwarding</h3>
+                <p class="text-gray-600">Air, ocean, and multimodal transport for commercial cargo with consolidation services</p>
+            </div>
+            
+            <!-- Service 3 -->
+            <div class="bg-white rounded-lg shadow-lg p-8 hover-lift">
+                <div class="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                    <i class="fas fa-file-check text-2xl nuelcargo-blue"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3 nuelcargo-blue">Customs Clearance</h3>
+                <p class="text-gray-600">Expert handling of import/export documentation and regulatory compliance</p>
+            </div>
+            
+            <!-- Service 4 -->
+            <div class="bg-white rounded-lg shadow-lg p-8 hover-lift">
+                <div class="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                    <i class="fas fa-warehouse text-2xl nuelcargo-blue"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3 nuelcargo-blue">Warehousing</h3>
+                <p class="text-gray-600">Secure storage with inventory management and last-mile delivery options</p>
+            </div>
+            
+            <!-- Service 5 -->
+            <div class="bg-white rounded-lg shadow-lg p-8 hover-lift">
+                <div class="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                    <i class="fas fa-thermometer-half text-2xl nuelcargo-blue"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3 nuelcargo-blue">Specialized Cargo</h3>
+                <p class="text-gray-600">Temperature-controlled, hazardous materials, and heavy equipment shipping</p>
+            </div>
+            
+            <!-- Service 6 -->
+            <div class="bg-white rounded-lg shadow-lg p-8 hover-lift">
+                <div class="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                    <i class="fas fa-chart-line text-2xl nuelcargo-blue"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3 nuelcargo-blue">Supply Chain Consulting</h3>
+                <p class="text-gray-600">End-to-end optimization and cost analysis for scaling internationally</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Carriers Partnership Section -->
+<section class="bg-gray-900 text-white py-16">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-12">Our Global Partnerships</h2>
+        <p class="text-center text-gray-300 mb-12">We partner with industry leaders to deliver your shipments worldwide</p>
+        
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center">
+            <div class="bg-white rounded-lg p-4 flex items-center justify-center h-24">
+                <span class="font-bold text-gray-800">DHL</span>
+            </div>
+            <div class="bg-white rounded-lg p-4 flex items-center justify-center h-24">
+                <span class="font-bold text-gray-800">FedEx</span>
+            </div>
+            <div class="bg-white rounded-lg p-4 flex items-center justify-center h-24">
+                <span class="font-bold text-gray-800">UPS</span>
+            </div>
+            <div class="bg-white rounded-lg p-4 flex items-center justify-center h-24">
+                <span class="font-bold text-gray-800">USPS</span>
+            </div>
+            <div class="bg-white rounded-lg p-4 flex items-center justify-center h-24">
+                <span class="font-bold text-gray-800">DPD</span>
+            </div>
+            <div class="bg-white rounded-lg p-4 flex items-center justify-center h-24">
+                <span class="font-bold text-gray-800">TNT</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Why Choose Nuelcargo -->
+<section id="about" class="py-20 bg-gray-50">
+    <div class="container mx-auto px-4">
+        <h2 class="text-4xl font-bold text-center mb-12 nuelcargo-blue">Why Choose Nuelcargo?</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <div class="flex space-x-4">
+                <div class="flex-shrink-0">
+                    <div class="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center">
+                        <i class="fas fa-globe text-white text-xl"></i>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-2 nuelcargo-blue">Global Network</h3>
+                    <p class="text-gray-600">Strategic partnerships with leading carriers and agents in over 150 countries</p>
+                </div>
+            </div>
+            
+            <div class="flex space-x-4">
+                <div class="flex-shrink-0">
+                    <div class="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center">
+                        <i class="fas fa-mobile-alt text-white text-xl"></i>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-2 nuelcargo-blue">Technology-Driven</h3>
+                    <p class="text-gray-600">User-friendly booking system, AI route optimization, and real-time tracking</p>
+                </div>
+            </div>
+            
+            <div class="flex space-x-4">
+                <div class="flex-shrink-0">
+                    <div class="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center">
+                        <i class="fas fa-headset text-white text-xl"></i>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-2 nuelcargo-blue">24/7 Support</h3>
+                    <p class="text-gray-600">Dedicated account managers and multilingual support available round the clock</p>
+                </div>
+            </div>
+            
+            <div class="flex space-x-4">
+                <div class="flex-shrink-0">
+                    <div class="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center">
+                        <i class="fas fa-award text-white text-xl"></i>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-2 nuelcargo-blue">Excellence</h3>
+                    <p class="text-gray-600">Licensed, insured operations with ISO-aligned quality and proven on-time delivery</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Company Section -->
+<section class="py-20">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div>
+                <h2 class="text-4xl font-bold mb-6 nuelcargo-blue">About Nuelcargo</h2>
+                <p class="text-gray-600 mb-4">Nuelcargo is a dynamic, online and offshore shipping and logistics company headquartered in Long Beach, California. We specialize in seamless, reliable conveyance of goods worldwide.</p>
+                <p class="text-gray-600 mb-4">As a fully digital-enabled shipping provider, we operate an intuitive platform that allows customers to book, track, and manage shipments in real time from anywhere in the world.</p>
+                <p class="text-gray-600 mb-6">We act as a versatile logistics intermediary and consolidator, delivering goods on behalf of major global carriers including DHL Express, FedEx, UPS, USPS, DPD, TNT, and many others.</p>
+                <a href="#" class="bg-nuelcargo-blue hover:bg-blue-800 text-white px-8 py-3 rounded-lg font-bold transition inline-block">
+                    Contact Us Today
+                </a>
+            </div>
+            <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-12 flex items-center justify-center h-96">
+                <svg class="w-full h-auto" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- World map illustration -->
+                    <circle cx="200" cy="150" r="120" fill="#e0f2fe" stroke="#003d82" stroke-width="2"/>
+                    <path d="M140 150 L180 130 L200 140 L220 120 L240 140" fill="none" stroke="#003d82" stroke-width="2"/>
+                    <circle cx="150" cy="170" r="8" fill="#ff8c00"/>
+                    <circle cx="250" cy="140" r="8" fill="#ff8c00"/>
+                    <circle cx="200" cy="180" r="8" fill="#ff8c00"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="bg-nuelcargo-blue text-white py-16">
+    <div class="container mx-auto px-4 text-center">
+        <h2 class="text-3xl font-bold mb-4">Ready to Ship?</h2>
+        <p class="text-xl mb-8 text-gray-100">Start tracking your shipment or contact us for a quote today</p>
+        <div class="flex flex-col md:flex-row gap-4 justify-center">
+            <a href="/" class="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-bold transition">
+                Track Shipment
+            </a>
+            <a href="mailto:support@nuelcargo.com" class="border-2 border-white hover:bg-white hover:text-blue-900 text-white px-8 py-3 rounded-lg font-bold transition">
+                Get a Quote
+            </a>
+        </div>
+    </div>
+</section>
+
+@endsection

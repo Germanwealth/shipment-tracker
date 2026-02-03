@@ -22,8 +22,12 @@ Route::get('/health', function () {
     ]);
 });
 
+// Public pages
+Route::get('/', function () {
+    return view('public.home');
+})->name('home');
+
 // Public tracking routes
-Route::get('/', [PublicTrackingController::class, 'index'])->name('tracking.home');
 Route::get('/track', [PublicTrackingController::class, 'index'])->name('tracking.index');
 Route::get('/track/{code}', [PublicTrackingController::class, 'search'])->name('tracking.search');
 

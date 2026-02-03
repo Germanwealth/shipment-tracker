@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.public')
 
-@section('title', 'Tracking Result')
+@section('title', 'Tracking Result - Nuelcargo')
 
 @section('content')
 <div class="min-h-screen bg-gray-50 py-12 px-4">
