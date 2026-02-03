@@ -12,15 +12,8 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        '*',  // Disable CSRF for all routes temporarily
+        '/admin/login',  // Allow login POST without CSRF
     ];
-    
-    public function handle($request, \Closure $next)
-    {
-        error_log("VerifyCsrfToken middleware - request path: " . $request->path());
-        // Just pass through without verifying
-        return $next($request);
-    }
 }
 
 
