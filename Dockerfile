@@ -72,14 +72,13 @@ if [ ! -f .env ]; then
   cp .env.example .env
 fi
 
-# Override APP_KEY from environment if set
+# Override APP_KEY from environment if set (MUST be before config:cache)
 if [ -n "$APP_KEY" ]; then
   echo "[$(date)] Setting APP_KEY from environment variable..."
-  # Use | as delimiter instead of / to avoid issues with colons and slashes
   sed -i "s|^APP_KEY=.*|APP_KEY=$APP_KEY|" .env
 fi
 
-# Override DATABASE_URL from environment if set
+# Override DATABASE_URL from environment if set (MUST be before config:cache)
 if [ -n "$DATABASE_URL" ]; then
   echo "[$(date)] Setting DATABASE_URL from environment variable..."
   sed -i "s|^DATABASE_URL=.*|DATABASE_URL=$DATABASE_URL|" .env
@@ -95,7 +94,11 @@ echo "[$(date)] Setting permissions..."
 chmod -R 777 storage bootstrap/cache
 chown -R www-data:www-data storage bootstrap/cache
 
-# Cache config and views
+# Clear any old cache files
+rm -rf bootstrap/cache/config.php
+rm -rf storage/framework/cache/*
+
+# NOW cache config and views (AFTER environment variables are set)
 echo "[$(date)] Caching configuration..."
 php artisan config:cache 2>&1 || echo "Warning: Config cache failed"
 echo "[$(date)] Caching views..."
