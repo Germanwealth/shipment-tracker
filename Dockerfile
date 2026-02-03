@@ -20,6 +20,7 @@ RUN composer install --no-dev --no-interaction --prefer-dist --no-scripts -q
 # Set permissions and create required directories
 RUN chown -R www-data:www-data /app && \
     mkdir -p storage/logs storage/framework/cache storage/framework/sessions storage/framework/views bootstrap/cache && \
+    chmod -R 775 storage bootstrap/cache && \
     chown -R www-data:www-data storage bootstrap/cache
 
 # Copy env file
@@ -42,7 +43,12 @@ server {
         fastcgi_pass 127.0.0.1:9000;
         fastcgi_index index.php;
         fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        fastcgi_param SCRIPT_NAME /index.php;
         include fastcgi_params;
+        fastcgi_hide_header X-Powered-By;
+        
+        # Error handling
+        error_page 502 503 /50x.html;
     }
 
     location ~ /\. {
@@ -75,13 +81,22 @@ fi
 # Set production mode
 echo "[$(date)] Configuring production environment..."
 sed -i 's/^APP_ENV=.*/APP_ENV=production/' .env
-sed -i 's/^APP_DEBUG=.*/APP_DEBUG=false/' .env
+sed -i 's/^APP_DEBUG=.*/APP_DEBUG=true/' .env
+
+# Ensure storage and bootstrap directories are writable
+echo "[$(date)] Setting permissions..."
+chmod -R 777 storage bootstrap/cache
+chown -R www-data:www-data storage bootstrap/cache
 
 # Cache config and views
 echo "[$(date)] Caching configuration..."
-php artisan config:cache
+php artisan config:cache 2>&1 || echo "Warning: Config cache failed"
 echo "[$(date)] Caching views..."
-php artisan view:cache
+php artisan view:cache 2>&1 || echo "Warning: View cache failed"
+
+# Test database connection
+echo "[$(date)] Testing database connection..."
+php artisan db:show --json 2>&1 || echo "Warning: Database test failed (will retry on first request)"
 
 echo "[$(date)] Starting PHP-FPM..."
 php-fpm -D
