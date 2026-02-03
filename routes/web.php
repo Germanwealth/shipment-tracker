@@ -208,6 +208,6 @@ Route::middleware('auth:admin')->group(function () {
 
         // Tracking updates
         Route::get('shipments/{shipment}/updates', [AdminShipmentController::class, 'showUpdates'])->name('shipments.updates');
-        Route::post('shipments/{shipment}/updates', [AdminShipmentController::class, 'storeUpdate'])->middleware(\App\Http\Middleware\VerifyCsrfToken::class)->name('shipments.updates.store');
+        Route::post('shipments/{shipment}/updates', [AdminShipmentController::class, 'storeUpdate'])->name('shipments.updates.store');
     });
 });
