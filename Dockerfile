@@ -90,6 +90,10 @@ update_env() {
 }
 
 # Update variables from environment
+echo "[$(date)] Environment vars before update:"
+echo "  APP_KEY env: $([ -n "$APP_KEY" ] && echo 'SET' || echo 'NOT SET')"
+echo "  DATABASE_URL env: $([ -n "$DATABASE_URL" ] && echo 'SET' || echo 'NOT SET')"
+
 [ -n "$APP_KEY" ] && update_env "APP_KEY" "$APP_KEY"
 [ -n "$APP_ENV" ] && update_env "APP_ENV" "$APP_ENV"
 [ -n "$APP_DEBUG" ] && update_env "APP_DEBUG" "$APP_DEBUG"
@@ -100,6 +104,10 @@ update_env() {
 # Force production and debug mode
 sed -i 's/^APP_ENV=.*/APP_ENV=production/' .env
 sed -i 's/^APP_DEBUG=.*/APP_DEBUG=true/' .env
+
+# Log what we have now
+echo "[$(date)] .env APP_KEY after update:"
+grep "^APP_KEY=" .env || echo "  APP_KEY NOT FOUND IN .env!"
 
 # Ensure storage and bootstrap directories are writable
 echo "[$(date)] Setting permissions..."
