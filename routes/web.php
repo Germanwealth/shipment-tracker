@@ -159,6 +159,31 @@ Route::get('/debug/shipments', function () {
     }
 })->name('debug.shipments');
 
+// Create test shipment endpoint
+Route::get('/debug/create-test-shipment', function () {
+    try {
+        $shipment = \App\Models\Shipment::create([
+            'tracking_code' => \App\Models\Shipment::generateTrackingCode(),
+            'sender_name' => 'Test Sender',
+            'receiver_name' => 'Test Receiver',
+            'item_description' => 'Test Package',
+            'origin' => 'New York',
+            'destination' => 'Los Angeles',
+            'current_status' => 'In Transit',
+            'expected_delivery_date' => now()->addDays(5),
+        ]);
+        
+        return response()->json([
+            'success' => true,
+            'message' => 'Test shipment created',
+            'tracking_code' => $shipment->tracking_code,
+            'url' => url('/track/' . $shipment->tracking_code)
+        ]);
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
+    }
+})->name('debug.create.test');
+
 // Admin routes (protected by auth middleware with CSRF for state-changing routes)
 Route::middleware('auth:admin')->group(function () {
     Route::post('/admin/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
