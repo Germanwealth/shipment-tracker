@@ -139,6 +139,26 @@ Route::get('/admin/session-check', function () {
     ]);
 })->name('admin.session.check');
 
+// Debug shipments endpoint - shows all shipments in database
+Route::get('/debug/shipments', function () {
+    try {
+        $shipments = \App\Models\Shipment::all();
+        return response()->json([
+            'count' => count($shipments),
+            'shipments' => $shipments->map(fn($s) => [
+                'id' => $s->id,
+                'tracking_code' => $s->tracking_code,
+                'sender' => $s->sender_name,
+                'receiver' => $s->receiver_name,
+                'status' => $s->current_status,
+                'created_at' => $s->created_at,
+            ])
+        ]);
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
+    }
+})->name('debug.shipments');
+
 // Admin routes (protected by auth middleware with CSRF for state-changing routes)
 Route::middleware('auth:admin')->group(function () {
     Route::post('/admin/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
