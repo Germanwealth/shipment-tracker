@@ -28,7 +28,15 @@ Route::get('/', function () {
 })->name('home');
 
 // Public tracking routes
-Route::get('/track', [PublicTrackingController::class, 'index'])->name('tracking.index');
+Route::get('/track', function (Request $request) {
+    // If code parameter is provided, redirect to path parameter format
+    if ($request->has('code')) {
+        return redirect('/track/' . $request->query('code'));
+    }
+    // Otherwise show the tracking search page
+    return app(PublicTrackingController::class)->index();
+})->name('tracking.index');
+
 Route::get('/track/{code}', [PublicTrackingController::class, 'search'])->name('tracking.search');
 
 // Generic login route (redirects to admin.login for Laravel's exception handler)
