@@ -110,20 +110,16 @@ chown -R www-data:www-data storage bootstrap/cache
 rm -rf bootstrap/cache/config.php
 rm -rf storage/framework/cache/*
 
-# Skip config caching - use fresh env
-echo "[$(date)] Skipping config cache to use fresh environment..."
-
-# Cache views only
-echo "[$(date)] Caching views..."
-php artisan view:cache 2>&1 || echo "Warning: View cache failed"
+# Skip all caching - use fresh environment
+echo "[$(date)] Skipping config and view caching - will use dynamic caching..."
 
 # Test database connection
 echo "[$(date)] Testing database connection..."
 php artisan db:show --json 2>&1 || echo "Warning: Database test failed"
 
-# Try to run a simple Artisan command
-echo "[$(date)] Running health check..."
-php artisan route:list 2>&1 | head -5 || echo "Warning: Route list failed"
+# Try to verify views directory
+echo "[$(date)] Verifying views directory..."
+ls -la storage/framework/views/ 2>/dev/null | head -5 || echo "No view cache yet"
 
 echo "[$(date)] Starting PHP-FPM..."
 php-fpm -D
