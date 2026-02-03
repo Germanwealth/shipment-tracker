@@ -86,10 +86,7 @@ Route::post('/admin/login', function (Request $request) {
             'email' => 'An error occurred: ' . $e->getMessage(),
         ]);
     }
-})->withoutMiddleware([
-    \App\Http\Middleware\VerifyCsrfToken::class,
-    \Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class,
-])->name('admin.login.post');
+})->name('admin.login.post');
 
 // Admin checker endpoint (for debugging)
 Route::get('/admin/check', function () {
@@ -128,8 +125,8 @@ Route::get('/admin/session-check', function () {
     ]);
 })->name('admin.session.check');
 
-// Admin routes (protected by auth middleware)
-Route::middleware('auth:admin')->group(function () {
+// Admin routes (protected by auth middleware and CSRF protection)
+Route::middleware(['auth:admin', \App\Http\Middleware\VerifyCsrfToken::class])->group(function () {
     Route::post('/admin/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
 
     Route::prefix('admin')->name('admin.')->group(function () {
