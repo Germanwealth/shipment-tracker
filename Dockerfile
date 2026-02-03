@@ -23,8 +23,7 @@ RUN chown -R www-data:www-data /app && \
     chmod -R 775 storage bootstrap/cache && \
     chown -R www-data:www-data storage bootstrap/cache
 
-# Copy env file
-COPY .env.example .env
+# DO NOT copy .env here - let entrypoint create it from environment variables
 
 # Configure Nginx to forward to PHP-FPM
 RUN mkdir -p /etc/nginx/sites-available /etc/nginx/sites-enabled && \
@@ -72,22 +71,33 @@ if [ ! -f .env ]; then
   cp .env.example .env
 fi
 
-# Override APP_KEY from environment if set (MUST be before config:cache)
-if [ -n "$APP_KEY" ]; then
-  echo "[$(date)] Setting APP_KEY from environment variable..."
-  # Use a marker to ensure this works
-  grep -q "^APP_KEY=" .env && sed -i "s|^APP_KEY=.*|APP_KEY=$APP_KEY|" .env || echo "APP_KEY=$APP_KEY" >> .env
-  echo "APP_KEY is now: $(grep 'APP_KEY=' .env)"
-fi
+# Read all environment variables and write to .env
+echo "[$(date)] Updating .env with environment variables..."
 
-# Override DATABASE_URL from environment if set (MUST be before config:cache)
-if [ -n "$DATABASE_URL" ]; then
-  echo "[$(date)] Setting DATABASE_URL from environment variable..."
-  sed -i "s|^DATABASE_URL=.*|DATABASE_URL=$DATABASE_URL|" .env
-fi
+# Function to update or add env variable
+update_env() {
+  key=$1
+  value=$2
+  if grep -q "^$key=" .env; then
+    # Update existing
+    sed -i "s|^$key=.*|$key=$value|" .env
+    echo "  Updated: $key"
+  else
+    # Add new
+    echo "$key=$value" >> .env
+    echo "  Added: $key"
+  fi
+}
 
-# Set production mode
-echo "[$(date)] Configuring production environment..."
+# Update variables from environment
+[ -n "$APP_KEY" ] && update_env "APP_KEY" "$APP_KEY"
+[ -n "$APP_ENV" ] && update_env "APP_ENV" "$APP_ENV"
+[ -n "$APP_DEBUG" ] && update_env "APP_DEBUG" "$APP_DEBUG"
+[ -n "$APP_URL" ] && update_env "APP_URL" "$APP_URL"
+[ -n "$LOG_LEVEL" ] && update_env "LOG_LEVEL" "$LOG_LEVEL"
+[ -n "$DATABASE_URL" ] && update_env "DATABASE_URL" "$DATABASE_URL"
+
+# Force production and debug mode
 sed -i 's/^APP_ENV=.*/APP_ENV=production/' .env
 sed -i 's/^APP_DEBUG=.*/APP_DEBUG=true/' .env
 
@@ -96,14 +106,12 @@ echo "[$(date)] Setting permissions..."
 chmod -R 777 storage bootstrap/cache
 chown -R www-data:www-data storage bootstrap/cache
 
-# Clear any old cache files (this is critical!)
+# Clear old cache files
 rm -rf bootstrap/cache/config.php
 rm -rf storage/framework/cache/*
 
-# SKIP config caching - let Laravel read directly from .env
-# This ensures fresh environment variables are always used
+# Skip config caching - use fresh env
 echo "[$(date)] Skipping config cache to use fresh environment..."
-# php artisan config:cache 2>&1 || echo "Warning: Config cache failed"
 
 # Cache views only
 echo "[$(date)] Caching views..."
@@ -111,9 +119,9 @@ php artisan view:cache 2>&1 || echo "Warning: View cache failed"
 
 # Test database connection
 echo "[$(date)] Testing database connection..."
-php artisan db:show --json 2>&1 || echo "Warning: Database test failed (will retry on first request)"
+php artisan db:show --json 2>&1 || echo "Warning: Database test failed"
 
-# Try to run a simple Artisan command to check if everything works
+# Try to run a simple Artisan command
 echo "[$(date)] Running health check..."
 php artisan route:list 2>&1 | head -5 || echo "Warning: Route list failed"
 
