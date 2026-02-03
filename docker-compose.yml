@@ -11,13 +11,15 @@ services:
     environment:
       - APP_ENV=production
       - APP_DEBUG=false
-      - APP_KEY=${APP_KEY}
+      - APP_KEY=base64:n8qjOmaLS4SyxbLSbhGeBlKy92fJiJ2rB6oeHOtLTUU=
+      - APP_URL=http://localhost:8000
+      - LOG_LEVEL=error
       - DB_CONNECTION=pgsql
       - DB_HOST=db
       - DB_PORT=5432
-      - DB_DATABASE=${DB_DATABASE}
-      - DB_USERNAME=${DB_USERNAME}
-      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_DATABASE=shipment_tracker
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=postgres123
     ports:
       - "8000:8080"
     depends_on:
