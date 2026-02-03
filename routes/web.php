@@ -7,6 +7,11 @@ use App\Http\Controllers\Auth\AdminAuthController;
 use App\Http\Controllers\AdminShipmentController;
 use App\Http\Controllers\PublicTrackingController;
 
+// Force HTTPS in production
+if (app()->environment('production')) {
+    \Illuminate\Support\Facades\URL::forceScheme('https');
+}
+
 // Health check endpoint
 Route::get('/health', function () {
     return response()->json([
