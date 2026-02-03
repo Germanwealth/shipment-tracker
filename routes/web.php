@@ -79,6 +79,22 @@ Route::get('/admin/check', function () {
     ]);
 })->name('admin.check');
 
+// Session/CSRF diagnostic endpoint
+Route::get('/admin/session-check', function () {
+    $sessionPath = storage_path('framework/sessions');
+    $isWritable = is_writable($sessionPath);
+    $sessionFiles = count(glob($sessionPath . '/*'));
+    
+    return response()->json([
+        'session_driver' => config('session.driver'),
+        'session_path' => $sessionPath,
+        'session_path_exists' => is_dir($sessionPath),
+        'session_path_writable' => $isWritable,
+        'session_files_count' => $sessionFiles,
+        'file_perms' => substr(sprintf('%o', fileperms($sessionPath)), -4),
+    ]);
+})->name('admin.session.check');
+
 // Admin routes (protected by auth middleware)
 Route::middleware('auth:admin')->group(function () {
     Route::post('/admin/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
