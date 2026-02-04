@@ -108,24 +108,24 @@
         <h2 class="text-3xl font-bold text-center mb-12">Our Global Partnerships</h2>
         <p class="text-center text-gray-300 mb-12">We partner with industry leaders to deliver your shipments worldwide</p>
         
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 items-center">
             <div class="bg-white rounded-lg p-4 flex items-center justify-center h-24">
-                <span class="font-bold text-gray-800">DHL</span>
+                <img src="{{ asset('partners/dhl logo.png') }}" alt="DHL" class="w-full h-12 md:h-14 object-contain" loading="lazy">
             </div>
             <div class="bg-white rounded-lg p-4 flex items-center justify-center h-24">
-                <span class="font-bold text-gray-800">FedEx</span>
+                <img src="{{ asset('partners/fedex logo.webp') }}" alt="FedEx" class="w-full h-12 md:h-14 object-contain" loading="lazy">
             </div>
             <div class="bg-white rounded-lg p-4 flex items-center justify-center h-24">
-                <span class="font-bold text-gray-800">UPS</span>
+                <img src="{{ asset('partners/ups-logo.jpg') }}" alt="UPS" class="w-full h-12 md:h-14 object-contain" loading="lazy">
             </div>
             <div class="bg-white rounded-lg p-4 flex items-center justify-center h-24">
-                <span class="font-bold text-gray-800">USPS</span>
+                <img src="{{ asset('partners/usps logo.png') }}" alt="USPS" class="w-full h-12 md:h-14 object-contain" loading="lazy">
             </div>
             <div class="bg-white rounded-lg p-4 flex items-center justify-center h-24">
-                <span class="font-bold text-gray-800">DPD</span>
+                <img src="{{ asset('partners/dpd.png') }}" alt="DPD" class="w-full h-12 md:h-14 object-contain" loading="lazy">
             </div>
             <div class="bg-white rounded-lg p-4 flex items-center justify-center h-24">
-                <span class="font-bold text-gray-800">TNT</span>
+                <img src="{{ asset('partners/TNT_Express_Logo.svg.png') }}" alt="TNT" class="w-full h-12 md:h-14 object-contain" loading="lazy">
             </div>
         </div>
     </div>
