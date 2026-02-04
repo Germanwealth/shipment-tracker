@@ -37,10 +37,18 @@
                 <a href="/" class="bg-nuelcargo-blue text-white px-6 py-2 rounded-lg hover:bg-nuelcargo-orange transition font-medium">Track Shipment</a>
             </div>
             
-            <button class="md:hidden text-gray-700">
+            <button id="mobile-menu-toggle" type="button" class="md:hidden text-gray-700" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
                 <i class="fas fa-bars text-xl"></i>
             </button>
         </nav>
+        <div id="mobile-menu" class="md:hidden hidden border-t border-gray-100 bg-white shadow-md">
+            <div class="px-4 py-4 space-y-3">
+                <a href="/#home" class="block text-gray-700 hover:text-nuelcargo-blue font-medium transition">Home</a>
+                <a href="/#services" class="block text-gray-700 hover:text-nuelcargo-blue font-medium transition">Services</a>
+                <a href="/#about" class="block text-gray-700 hover:text-nuelcargo-blue font-medium transition">About</a>
+                <a href="/" class="block bg-nuelcargo-blue text-white px-4 py-2 rounded-lg hover:bg-nuelcargo-orange transition font-medium text-center">Track Shipment</a>
+            </div>
+        </div>
     </header>
 
     @yield('content')
@@ -102,5 +110,28 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggle = document.getElementById('mobile-menu-toggle');
+            const menu = document.getElementById('mobile-menu');
+            if (!toggle || !menu) return;
+
+            toggle.addEventListener('click', (event) => {
+                event.preventDefault();
+                const isHidden = menu.classList.toggle('hidden');
+                toggle.setAttribute('aria-expanded', isHidden ? 'false' : 'true');
+            });
+
+            menu.querySelectorAll('a').forEach((link) => {
+                link.addEventListener('click', () => {
+                    if (!menu.classList.contains('hidden')) {
+                        menu.classList.add('hidden');
+                        toggle.setAttribute('aria-expanded', 'false');
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
