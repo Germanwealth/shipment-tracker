@@ -224,4 +224,41 @@
     </div>
 </section>
 
+<!-- Inquiry Section -->
+<section class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+        <div class="max-w-3xl mx-auto bg-white rounded-2xl shadow-lg p-8 md:p-10">
+            <h2 class="text-3xl font-bold nuelcargo-blue text-center mb-3">Have a Question?</h2>
+            <p class="text-gray-600 text-center mb-8">Send us your enquiry or comment and our team will respond promptly.</p>
+
+            @if (session('inquiry_success'))
+                <div class="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg text-sm">
+                    {{ session('inquiry_success') }}
+                </div>
+            @endif
+
+            <form action="{{ route('inquiry.send') }}" method="POST" class="space-y-6">
+                @csrf
+                <div>
+                    <label for="inquiry-name" class="block text-sm font-semibold text-gray-700 mb-2">Name</label>
+                    <input id="inquiry-name" name="name" type="text" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-900" placeholder="Your full name">
+                </div>
+                <div>
+                    <label for="inquiry-email" class="block text-sm font-semibold text-gray-700 mb-2">Email</label>
+                    <input id="inquiry-email" name="email" type="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-900" placeholder="you@example.com">
+                </div>
+                <div>
+                    <label for="inquiry-message" class="block text-sm font-semibold text-gray-700 mb-2">Comment or Question</label>
+                    <textarea id="inquiry-message" name="message" rows="5" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-900" placeholder="Tell us how we can help"></textarea>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="bg-nuelcargo-blue hover:bg-blue-800 text-white px-10 py-3 rounded-lg font-bold transition">
+                        Submit Enquiry
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
 @endsection

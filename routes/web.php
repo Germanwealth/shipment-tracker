@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\AdminAuthController;
 use App\Http\Controllers\AdminShipmentController;
@@ -39,6 +40,29 @@ Route::get('/track', function (Request $request) {
 })->name('tracking.index');
 
 Route::get('/track/{code}', [PublicTrackingController::class, 'search'])->name('tracking.search');
+
+// Public inquiry form
+Route::post('/inquiry', function (Request $request) {
+    $data = $request->validate([
+        'name' => 'required|string|max:120',
+        'email' => 'required|email|max:200',
+        'message' => 'required|string|max:2000',
+    ]);
+
+    $to = env('MAIL_CONTACT_TO') ?: env('MAIL_FROM_ADDRESS', 'support@nuelcargo.com');
+    $subject = 'New Website Inquiry';
+    $body = "Name: {$data['name']}\n"
+        . "Email: {$data['email']}\n"
+        . "Message:\n{$data['message']}\n";
+
+    Mail::raw($body, function ($message) use ($to, $subject, $data) {
+        $message->to($to)
+            ->subject($subject)
+            ->replyTo($data['email'], $data['name']);
+    });
+
+    return back()->with('inquiry_success', 'Thanks! Your message has been sent.');
+})->name('inquiry.send');
 
 // Generic login route (redirects to admin.login for Laravel's exception handler)
 Route::get('/login', function () {
