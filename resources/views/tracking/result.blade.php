@@ -3,6 +3,57 @@
 @section('title', 'Tracking Result - Nuelcargo')
 
 @section('content')
+<style>
+    .route-map {
+        background: radial-gradient(120% 120% at 10% 10%, #0f172a 0%, #0b1220 55%, #070b14 100%);
+    }
+    .route-map::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image:
+            linear-gradient(rgba(148, 163, 184, 0.12) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(148, 163, 184, 0.12) 1px, transparent 1px);
+        background-size: 40px 40px;
+        pointer-events: none;
+    }
+    .route-haze {
+        background: radial-gradient(circle at 70% 30%, rgba(56, 189, 248, 0.25), transparent 55%),
+            radial-gradient(circle at 30% 70%, rgba(59, 130, 246, 0.2), transparent 50%);
+    }
+    .route-path {
+        stroke-dasharray: 8 10;
+        animation: route-dash 16s linear infinite;
+    }
+    .route-pulse {
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        background: #22c55e;
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+        animation: route-pulse 2s infinite;
+    }
+    .route-endpoint {
+        animation: endpoint-pulse 2.5s ease-in-out infinite;
+        transform-origin: center;
+    }
+    .route-dot {
+        filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.8));
+    }
+    @keyframes route-dash {
+        to { stroke-dashoffset: -180; }
+    }
+    @keyframes route-pulse {
+        0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+        70% { box-shadow: 0 0 0 12px rgba(34, 197, 94, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+    }
+    @keyframes endpoint-pulse {
+        0%, 100% { transform: scale(1); opacity: 0.85; }
+        50% { transform: scale(1.15); opacity: 1; }
+    }
+</style>
+
 <div class="min-h-screen bg-gray-50 py-12 px-4">
     <div class="max-w-3xl mx-auto">
         <!-- Header -->
@@ -70,6 +121,61 @@
                     <p class="text-sm text-gray-600 mb-1">Expected Delivery</p>
                     <p class="text-gray-900 font-semibold">{{ $shipment->expected_delivery_date->format('M d, Y') }}</p>
                 </div>
+            </div>
+        </div>
+
+        <!-- Live Route Map -->
+        <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-6">
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-900">Live Route</h2>
+                    <p class="text-sm text-gray-500">Auto-updating visual path based on your shipment activity</p>
+                </div>
+                <div class="inline-flex items-center gap-2 text-sm text-green-600 font-semibold">
+                    <span class="route-pulse"></span>
+                    Tracking active
+                </div>
+            </div>
+
+            <div class="route-map route-haze relative overflow-hidden rounded-2xl border border-slate-800">
+                <div class="absolute inset-0 opacity-80"></div>
+                <svg viewBox="0 0 900 300" class="w-full h-64 md:h-72 relative z-10" aria-hidden="true">
+                    <defs>
+                        <linearGradient id="routeLine" x1="0" y1="0" x2="1" y2="1">
+                            <stop offset="0%" stop-color="#38bdf8" />
+                            <stop offset="100%" stop-color="#6366f1" />
+                        </linearGradient>
+                        <filter id="routeGlow">
+                            <feGaussianBlur stdDeviation="4" result="blur" />
+                            <feMerge>
+                                <feMergeNode in="blur" />
+                                <feMergeNode in="SourceGraphic" />
+                            </feMerge>
+                        </filter>
+                        <path id="routeCurve" d="M100 230 C 260 120, 380 110, 520 160 S 760 240, 820 90" />
+                    </defs>
+                    <path d="M100 230 C 260 120, 380 110, 520 160 S 760 240, 820 90" stroke="url(#routeLine)" stroke-width="4" fill="none" class="route-path" filter="url(#routeGlow)" />
+                    <circle cx="100" cy="230" r="8" fill="#22c55e" class="route-endpoint" />
+                    <circle cx="820" cy="90" r="8" fill="#f97316" class="route-endpoint" />
+                    <circle r="6" fill="#38bdf8" class="route-dot">
+                        <animateMotion dur="9s" repeatCount="indefinite" path="M100 230 C 260 120, 380 110, 520 160 S 760 240, 820 90" />
+                    </circle>
+                </svg>
+
+                <div class="absolute left-6 bottom-5 bg-white/90 backdrop-blur px-4 py-2 rounded-lg border border-white/60 shadow-sm text-xs text-slate-700">
+                    <div class="font-semibold text-slate-900">Origin</div>
+                    <div>{{ $shipment->origin }}</div>
+                </div>
+                <div class="absolute right-6 top-5 bg-white/90 backdrop-blur px-4 py-2 rounded-lg border border-white/60 shadow-sm text-xs text-slate-700 text-right">
+                    <div class="font-semibold text-slate-900">Destination</div>
+                    <div>{{ $shipment->destination }}</div>
+                </div>
+
+                @if ($updates->count() > 0)
+                    <div class="absolute left-1/2 -translate-x-1/2 bottom-4 bg-slate-900/80 text-slate-100 text-xs px-4 py-2 rounded-full border border-slate-700">
+                        Latest scan: {{ $updates->first()->location }} · {{ $updates->first()->created_at->format('M d, Y \a\t H:i') }}
+                    </div>
+                @endif
             </div>
         </div>
 
