@@ -1,6 +1,6 @@
 @extends('layouts.public')
 
-@section('title', 'Nuelcargo - Global Shipping & Logistics Solutions')
+@section('title', 'Nuelcargo Logistics - Global Shipping & Logistics Solutions')
 
 @section('content')
 
@@ -17,7 +17,7 @@
         </div>
         <div class="md:w-1/2">
             <div class="relative">
-                <img src="{{ asset('shipping.webp') }}" alt="Nuelcargo Shipping Container" class="w-full h-auto rounded-lg drop-shadow-lg">
+                <img src="{{ asset('shipping.webp') }}" alt="Nuelcargo Logistics Shipping Container" class="w-full h-auto rounded-lg drop-shadow-lg">
             </div>
         </div>
     </div>
@@ -131,10 +131,10 @@
     </div>
 </section>
 
-<!-- Why Choose Nuelcargo -->
+<!-- Why Choose Nuelcargo Logistics -->
 <section id="about" class="py-20 bg-gray-50">
     <div class="container mx-auto px-4">
-        <h2 class="text-4xl font-bold text-center mb-12 nuelcargo-blue">Why Choose Nuelcargo?</h2>
+        <h2 class="text-4xl font-bold text-center mb-12 nuelcargo-blue">Why Choose Nuelcargo Logistics?</h2>
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
             <div class="flex space-x-4">
@@ -193,8 +193,8 @@
     <div class="container mx-auto px-4">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div>
-                <h2 class="text-4xl font-bold mb-6 nuelcargo-blue">About Nuelcargo</h2>
-                <p class="text-gray-600 mb-4">Nuelcargo is a dynamic, online and offshore shipping and logistics company headquartered in Long Beach, California. We specialize in seamless, reliable conveyance of goods worldwide.</p>
+                <h2 class="text-4xl font-bold mb-6 nuelcargo-blue">About Nuelcargo Logistics</h2>
+                <p class="text-gray-600 mb-4">Nuelcargo Logistics is a dynamic, online and offshore shipping and logistics company headquartered in Long Beach, California. We specialize in seamless, reliable conveyance of goods worldwide.</p>
                 <p class="text-gray-600 mb-4">As a fully digital-enabled shipping provider, we operate an intuitive platform that allows customers to book, track, and manage shipments in real time from anywhere in the world.</p>
                 <p class="text-gray-600 mb-6">We act as a versatile logistics intermediary and consolidator, delivering goods on behalf of major global carriers including DHL Express, FedEx, UPS, USPS, DPD, TNT, and many others.</p>
                 <a href="#" class="bg-nuelcargo-blue hover:bg-blue-800 text-white px-8 py-3 rounded-lg font-bold transition inline-block">

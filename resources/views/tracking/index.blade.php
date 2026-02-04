@@ -1,6 +1,6 @@
 @extends('layouts.public')
 
-@section('title', 'Track Your Shipment - Nuelcargo')
+@section('title', 'Track Your Shipment - Nuelcargo Logistics')
 
 @section('content')
 <section class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-20">

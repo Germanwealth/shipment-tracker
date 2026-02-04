@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Nuelcargo - Global Shipping & Logistics Solutions')</title>
+    <title>@yield('title', 'Nuelcargo Logistics - Global Shipping & Logistics Solutions')</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -25,7 +25,7 @@
                     </svg>
                 </div>
                 <div>
-                    <div class="font-bold text-xl nuelcargo-blue">Nuelcargo</div>
+                    <div class="font-bold text-xl nuelcargo-blue">Nuelcargo Logistics</div>
                     <div class="text-xs text-gray-500">Global Shipping</div>
                 </div>
             </a>
@@ -50,7 +50,7 @@
         <div class="container mx-auto px-4 py-16">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
                 <div>
-                    <div class="font-bold text-xl mb-2">Nuelcargo</div>
+                    <div class="font-bold text-xl mb-2">Nuelcargo Logistics</div>
                     <p class="text-gray-300 text-sm">Global shipping and logistics solutions for businesses and individuals.</p>
                     <div class="flex space-x-4 mt-4">
                         <a href="#" class="text-gray-300 hover:text-white transition"><i class="fab fa-facebook-f"></i></a>
@@ -94,7 +94,7 @@
             </div>
             
             <div class="border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-300">
-                <p>&copy; 2026 Nuelcargo. All rights reserved.</p>
+                <p>&copy; 2026 Nuelcargo Logistics. All rights reserved.</p>
                 <div class="space-x-4 mt-4 md:mt-0">
                     <a href="#" class="hover:text-white transition">Privacy Policy</a>
                     <a href="#" class="hover:text-white transition">Terms of Service</a>

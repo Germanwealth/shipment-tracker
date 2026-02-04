@@ -1,6 +1,6 @@
 @extends('layouts.public')
 
-@section('title', 'Tracking Result - Nuelcargo')
+@section('title', 'Tracking Result - Nuelcargo Logistics')
 
 @section('content')
 <style>
