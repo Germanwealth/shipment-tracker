@@ -22,7 +22,7 @@ return [
     ],
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'support@nuelcargo.com'),
+        'address' => env('MAIL_FROM_ADDRESS', 'support@nuellogistics.com'),
         'name' => env('MAIL_FROM_NAME', 'Nuelcargo Logistics'),
     ],
 ];

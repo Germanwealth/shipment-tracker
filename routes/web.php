@@ -49,7 +49,7 @@ Route::post('/inquiry', function (Request $request) {
         'message' => 'required|string|max:2000',
     ]);
 
-    $to = env('MAIL_CONTACT_TO') ?: env('MAIL_FROM_ADDRESS', 'support@nuelcargo.com');
+    $to = env('MAIL_CONTACT_TO') ?: env('MAIL_FROM_ADDRESS', 'support@nuellogistics.com');
     $subject = 'New Website Inquiry';
     $body = "Name: {$data['name']}\n"
         . "Email: {$data['email']}\n"

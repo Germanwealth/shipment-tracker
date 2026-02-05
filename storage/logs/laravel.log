@@ -1,0 +1,125 @@
+[2026-02-05 16:26:31] local.ERROR: PHP Parse error: Syntax error, unexpected T_OBJECT_OPERATOR on line 1 {"exception":"[object] (Psy\\Exception\\ParseErrorException(code: 0): PHP Parse error: Syntax error, unexpected T_OBJECT_OPERATOR on line 1 at /home/codecps/Desktop/tracker/vendor/psy/psysh/src/Exception/ParseErrorException.php:44)
+[stacktrace]
+#0 /home/codecps/Desktop/tracker/vendor/psy/psysh/src/CodeCleaner.php(488): Psy\\Exception\\ParseErrorException::fromParseError()
+#1 /home/codecps/Desktop/tracker/vendor/psy/psysh/src/CodeCleaner.php(269): Psy\\CodeCleaner->parse()
+#2 /home/codecps/Desktop/tracker/vendor/psy/psysh/src/Shell.php(985): Psy\\CodeCleaner->clean()
+#3 /home/codecps/Desktop/tracker/vendor/psy/psysh/src/Shell.php(1018): Psy\\Shell->addCode()
+#4 /home/codecps/Desktop/tracker/vendor/psy/psysh/src/Shell.php(1562): Psy\\Shell->setCode()
+#5 /home/codecps/Desktop/tracker/vendor/laravel/tinker/src/Console/TinkerCommand.php(76): Psy\\Shell->execute()
+#6 /home/codecps/Desktop/tracker/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(36): Laravel\\Tinker\\Console\\TinkerCommand->handle()
+#7 /home/codecps/Desktop/tracker/vendor/laravel/framework/src/Illuminate/Container/Util.php(43): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#8 /home/codecps/Desktop/tracker/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(95): Illuminate\\Container\\Util::unwrapIfClosure()
+#9 /home/codecps/Desktop/tracker/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(35): Illuminate\\Container\\BoundMethod::callBoundMethod()
+#10 /home/codecps/Desktop/tracker/vendor/laravel/framework/src/Illuminate/Container/Container.php(696): Illuminate\\Container\\BoundMethod::call()
+#11 /home/codecps/Desktop/tracker/vendor/laravel/framework/src/Illuminate/Console/Command.php(213): Illuminate\\Container\\Container->call()
+#12 /home/codecps/Desktop/tracker/vendor/symfony/console/Command/Command.php(341): Illuminate\\Console\\Command->execute()
+#13 /home/codecps/Desktop/tracker/vendor/laravel/framework/src/Illuminate/Console/Command.php(182): Symfony\\Component\\Console\\Command\\Command->run()
+#14 /home/codecps/Desktop/tracker/vendor/symfony/console/Application.php(1102): Illuminate\\Console\\Command->run()
+#15 /home/codecps/Desktop/tracker/vendor/symfony/console/Application.php(356): Symfony\\Component\\Console\\Application->doRunCommand()
+#16 /home/codecps/Desktop/tracker/vendor/symfony/console/Application.php(195): Symfony\\Component\\Console\\Application->doRun()
+#17 /home/codecps/Desktop/tracker/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(198): Symfony\\Component\\Console\\Application->run()
+#18 /home/codecps/Desktop/tracker/artisan(30): Illuminate\\Foundation\\Console\\Kernel->handle()
+#19 {main}
+"} 
+[2026-02-05 16:26:51] local.ERROR: Uncaught Symfony\Component\Mailer\Exception\TransportException: Connection could not be established with host "support@nuellogistics.com:587": stream_socket_client(): php_network_getaddresses: getaddrinfo for support@nuellogistics.com failed: Name or service not known in /home/codecps/Desktop/tracker/vendor/symfony/mailer/Transport/Smtp/Stream/SocketStream.php:154
+Stack trace:
+#0 [internal function]: Symfony\Component\Mailer\Transport\Smtp\Stream\SocketStream->Symfony\Component\Mailer\Transport\Smtp\Stream\{closure}()
+#1 /home/codecps/Desktop/tracker/vendor/symfony/mailer/Transport/Smtp/Stream/SocketStream.php(157): stream_socket_client()
+#2 /home/codecps/Desktop/tracker/vendor/symfony/mailer/Transport/Smtp/SmtpTransport.php(268): Symfony\Component\Mailer\Transport\Smtp\Stream\SocketStream->initialize()
+#3 /home/codecps/Desktop/tracker/vendor/symfony/mailer/Transport/Smtp/SmtpTransport.php(200): Symfony\Component\Mailer\Transport\Smtp\SmtpTransport->start()
+#4 /home/codecps/Desktop/tracker/vendor/symfony/mailer/Transport/AbstractTransport.php(69): Symfony\Component\Mailer\Transport\Smtp\SmtpTransport->doSend()
+#5 /home/codecps/Desktop/tracker/vendor/symfony/mailer/Transport/Smtp/SmtpTransport.php(138): Symfony\Component\Mailer\Transport\AbstractTransport->send()
+#6 /home/codecps/Desktop/tracker/vendor/laravel/framework/src/Illuminate/Mail/Mailer.php(585): Symfony\Component\Mailer\Transport\Smtp\SmtpTransport->send()
+#7 /home/codecps/Desktop/tracker/vendor/laravel/framework/src/Illuminate/Mail/Mailer.php(332): Illuminate\Mail\Mailer->sendSymfonyMessage()
+#8 /home/codecps/Desktop/tracker/vendor/laravel/framework/src/Illuminate/Mail/Mailer.php(224): Illuminate\Mail\Mailer->send()
+#9 /home/codecps/Desktop/tracker/vendor/laravel/framework/src/Illuminate/Mail/MailManager.php(622): Illuminate\Mail\Mailer->raw()
+#10 /home/codecps/Desktop/tracker/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(361): Illuminate\Mail\MailManager->__call()
+#11 Command line code(1): Illuminate\Support\Facades\Facade::__callStatic()
+#12 {main}
+  thrown {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Uncaught Symfony\\Component\\Mailer\\Exception\\TransportException: Connection could not be established with host \"support@nuellogistics.com:587\": stream_socket_client(): php_network_getaddresses: getaddrinfo for support@nuellogistics.com failed: Name or service not known in /home/codecps/Desktop/tracker/vendor/symfony/mailer/Transport/Smtp/Stream/SocketStream.php:154
+Stack trace:
+#0 [internal function]: Symfony\\Component\\Mailer\\Transport\\Smtp\\Stream\\SocketStream->Symfony\\Component\\Mailer\\Transport\\Smtp\\Stream\\{closure}()
+#1 /home/codecps/Desktop/tracker/vendor/symfony/mailer/Transport/Smtp/Stream/SocketStream.php(157): stream_socket_client()
+#2 /home/codecps/Desktop/tracker/vendor/symfony/mailer/Transport/Smtp/SmtpTransport.php(268): Symfony\\Component\\Mailer\\Transport\\Smtp\\Stream\\SocketStream->initialize()
+#3 /home/codecps/Desktop/tracker/vendor/symfony/mailer/Transport/Smtp/SmtpTransport.php(200): Symfony\\Component\\Mailer\\Transport\\Smtp\\SmtpTransport->start()
+#4 /home/codecps/Desktop/tracker/vendor/symfony/mailer/Transport/AbstractTransport.php(69): Symfony\\Component\\Mailer\\Transport\\Smtp\\SmtpTransport->doSend()
+#5 /home/codecps/Desktop/tracker/vendor/symfony/mailer/Transport/Smtp/SmtpTransport.php(138): Symfony\\Component\\Mailer\\Transport\\AbstractTransport->send()
+#6 /home/codecps/Desktop/tracker/vendor/laravel/framework/src/Illuminate/Mail/Mailer.php(585): Symfony\\Component\\Mailer\\Transport\\Smtp\\SmtpTransport->send()
+#7 /home/codecps/Desktop/tracker/vendor/laravel/framework/src/Illuminate/Mail/Mailer.php(332): Illuminate\\Mail\\Mailer->sendSymfonyMessage()
+#8 /home/codecps/Desktop/tracker/vendor/laravel/framework/src/Illuminate/Mail/Mailer.php(224): Illuminate\\Mail\\Mailer->send()
+#9 /home/codecps/Desktop/tracker/vendor/laravel/framework/src/Illuminate/Mail/MailManager.php(622): Illuminate\\Mail\\Mailer->raw()
+#10 /home/codecps/Desktop/tracker/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(361): Illuminate\\Mail\\MailManager->__call()
+#11 Command line code(1): Illuminate\\Support\\Facades\\Facade::__callStatic()
+#12 {main}
+  thrown at /home/codecps/Desktop/tracker/vendor/symfony/mailer/Transport/Smtp/Stream/SocketStream.php:154)
+[stacktrace]
+#0 {main}
+"} 
+[2026-02-05 16:30:06] local.ERROR: Uncaught Symfony\Component\Mailer\Exception\TransportException: Connection could not be established with host "ssl://mail.privateemail.com:465": stream_socket_client(): php_network_getaddresses: getaddrinfo for mail.privateemail.com failed: Name or service not known in /home/codecps/Desktop/tracker/vendor/symfony/mailer/Transport/Smtp/Stream/SocketStream.php:154
+Stack trace:
+#0 [internal function]: Symfony\Component\Mailer\Transport\Smtp\Stream\SocketStream->Symfony\Component\Mailer\Transport\Smtp\Stream\{closure}()
+#1 /home/codecps/Desktop/tracker/vendor/symfony/mailer/Transport/Smtp/Stream/SocketStream.php(157): stream_socket_client()
+#2 /home/codecps/Desktop/tracker/vendor/symfony/mailer/Transport/Smtp/SmtpTransport.php(268): Symfony\Component\Mailer\Transport\Smtp\Stream\SocketStream->initialize()
+#3 /home/codecps/Desktop/tracker/vendor/symfony/mailer/Transport/Smtp/SmtpTransport.php(200): Symfony\Component\Mailer\Transport\Smtp\SmtpTransport->start()
+#4 /home/codecps/Desktop/tracker/vendor/symfony/mailer/Transport/AbstractTransport.php(69): Symfony\Component\Mailer\Transport\Smtp\SmtpTransport->doSend()
+#5 /home/codecps/Desktop/tracker/vendor/symfony/mailer/Transport/Smtp/SmtpTransport.php(138): Symfony\Component\Mailer\Transport\AbstractTransport->send()
+#6 /home/codecps/Desktop/tracker/vendor/laravel/framework/src/Illuminate/Mail/Mailer.php(585): Symfony\Component\Mailer\Transport\Smtp\SmtpTransport->send()
+#7 /home/codecps/Desktop/tracker/vendor/laravel/framework/src/Illuminate/Mail/Mailer.php(332): Illuminate\Mail\Mailer->sendSymfonyMessage()
+#8 /home/codecps/Desktop/tracker/vendor/laravel/framework/src/Illuminate/Mail/Mailer.php(224): Illuminate\Mail\Mailer->send()
+#9 /home/codecps/Desktop/tracker/vendor/laravel/framework/src/Illuminate/Mail/MailManager.php(622): Illuminate\Mail\Mailer->raw()
+#10 /home/codecps/Desktop/tracker/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(361): Illuminate\Mail\MailManager->__call()
+#11 Command line code(1): Illuminate\Support\Facades\Facade::__callStatic()
+#12 {main}
+  thrown {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Uncaught Symfony\\Component\\Mailer\\Exception\\TransportException: Connection could not be established with host \"ssl://mail.privateemail.com:465\": stream_socket_client(): php_network_getaddresses: getaddrinfo for mail.privateemail.com failed: Name or service not known in /home/codecps/Desktop/tracker/vendor/symfony/mailer/Transport/Smtp/Stream/SocketStream.php:154
+Stack trace:
+#0 [internal function]: Symfony\\Component\\Mailer\\Transport\\Smtp\\Stream\\SocketStream->Symfony\\Component\\Mailer\\Transport\\Smtp\\Stream\\{closure}()
+#1 /home/codecps/Desktop/tracker/vendor/symfony/mailer/Transport/Smtp/Stream/SocketStream.php(157): stream_socket_client()
+#2 /home/codecps/Desktop/tracker/vendor/symfony/mailer/Transport/Smtp/SmtpTransport.php(268): Symfony\\Component\\Mailer\\Transport\\Smtp\\Stream\\SocketStream->initialize()
+#3 /home/codecps/Desktop/tracker/vendor/symfony/mailer/Transport/Smtp/SmtpTransport.php(200): Symfony\\Component\\Mailer\\Transport\\Smtp\\SmtpTransport->start()
+#4 /home/codecps/Desktop/tracker/vendor/symfony/mailer/Transport/AbstractTransport.php(69): Symfony\\Component\\Mailer\\Transport\\Smtp\\SmtpTransport->doSend()
+#5 /home/codecps/Desktop/tracker/vendor/symfony/mailer/Transport/Smtp/SmtpTransport.php(138): Symfony\\Component\\Mailer\\Transport\\AbstractTransport->send()
+#6 /home/codecps/Desktop/tracker/vendor/laravel/framework/src/Illuminate/Mail/Mailer.php(585): Symfony\\Component\\Mailer\\Transport\\Smtp\\SmtpTransport->send()
+#7 /home/codecps/Desktop/tracker/vendor/laravel/framework/src/Illuminate/Mail/Mailer.php(332): Illuminate\\Mail\\Mailer->sendSymfonyMessage()
+#8 /home/codecps/Desktop/tracker/vendor/laravel/framework/src/Illuminate/Mail/Mailer.php(224): Illuminate\\Mail\\Mailer->send()
+#9 /home/codecps/Desktop/tracker/vendor/laravel/framework/src/Illuminate/Mail/MailManager.php(622): Illuminate\\Mail\\Mailer->raw()
+#10 /home/codecps/Desktop/tracker/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(361): Illuminate\\Mail\\MailManager->__call()
+#11 Command line code(1): Illuminate\\Support\\Facades\\Facade::__callStatic()
+#12 {main}
+  thrown at /home/codecps/Desktop/tracker/vendor/symfony/mailer/Transport/Smtp/Stream/SocketStream.php:154)
+[stacktrace]
+#0 {main}
+"} 
+[2026-02-05 16:32:11] local.ERROR: Uncaught Symfony\Component\Mailer\Exception\TransportException: Connection could not be established with host "ssl://smtp.privateemail.com:465": stream_socket_client(): php_network_getaddresses: getaddrinfo for smtp.privateemail.com failed: Name or service not known in /home/codecps/Desktop/tracker/vendor/symfony/mailer/Transport/Smtp/Stream/SocketStream.php:154
+Stack trace:
+#0 [internal function]: Symfony\Component\Mailer\Transport\Smtp\Stream\SocketStream->Symfony\Component\Mailer\Transport\Smtp\Stream\{closure}()
+#1 /home/codecps/Desktop/tracker/vendor/symfony/mailer/Transport/Smtp/Stream/SocketStream.php(157): stream_socket_client()
+#2 /home/codecps/Desktop/tracker/vendor/symfony/mailer/Transport/Smtp/SmtpTransport.php(268): Symfony\Component\Mailer\Transport\Smtp\Stream\SocketStream->initialize()
+#3 /home/codecps/Desktop/tracker/vendor/symfony/mailer/Transport/Smtp/SmtpTransport.php(200): Symfony\Component\Mailer\Transport\Smtp\SmtpTransport->start()
+#4 /home/codecps/Desktop/tracker/vendor/symfony/mailer/Transport/AbstractTransport.php(69): Symfony\Component\Mailer\Transport\Smtp\SmtpTransport->doSend()
+#5 /home/codecps/Desktop/tracker/vendor/symfony/mailer/Transport/Smtp/SmtpTransport.php(138): Symfony\Component\Mailer\Transport\AbstractTransport->send()
+#6 /home/codecps/Desktop/tracker/vendor/laravel/framework/src/Illuminate/Mail/Mailer.php(585): Symfony\Component\Mailer\Transport\Smtp\SmtpTransport->send()
+#7 /home/codecps/Desktop/tracker/vendor/laravel/framework/src/Illuminate/Mail/Mailer.php(332): Illuminate\Mail\Mailer->sendSymfonyMessage()
+#8 /home/codecps/Desktop/tracker/vendor/laravel/framework/src/Illuminate/Mail/Mailer.php(224): Illuminate\Mail\Mailer->send()
+#9 /home/codecps/Desktop/tracker/vendor/laravel/framework/src/Illuminate/Mail/MailManager.php(622): Illuminate\Mail\Mailer->raw()
+#10 /home/codecps/Desktop/tracker/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(361): Illuminate\Mail\MailManager->__call()
+#11 Command line code(1): Illuminate\Support\Facades\Facade::__callStatic()
+#12 {main}
+  thrown {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Uncaught Symfony\\Component\\Mailer\\Exception\\TransportException: Connection could not be established with host \"ssl://smtp.privateemail.com:465\": stream_socket_client(): php_network_getaddresses: getaddrinfo for smtp.privateemail.com failed: Name or service not known in /home/codecps/Desktop/tracker/vendor/symfony/mailer/Transport/Smtp/Stream/SocketStream.php:154
+Stack trace:
+#0 [internal function]: Symfony\\Component\\Mailer\\Transport\\Smtp\\Stream\\SocketStream->Symfony\\Component\\Mailer\\Transport\\Smtp\\Stream\\{closure}()
+#1 /home/codecps/Desktop/tracker/vendor/symfony/mailer/Transport/Smtp/Stream/SocketStream.php(157): stream_socket_client()
+#2 /home/codecps/Desktop/tracker/vendor/symfony/mailer/Transport/Smtp/SmtpTransport.php(268): Symfony\\Component\\Mailer\\Transport\\Smtp\\Stream\\SocketStream->initialize()
+#3 /home/codecps/Desktop/tracker/vendor/symfony/mailer/Transport/Smtp/SmtpTransport.php(200): Symfony\\Component\\Mailer\\Transport\\Smtp\\SmtpTransport->start()
+#4 /home/codecps/Desktop/tracker/vendor/symfony/mailer/Transport/AbstractTransport.php(69): Symfony\\Component\\Mailer\\Transport\\Smtp\\SmtpTransport->doSend()
+#5 /home/codecps/Desktop/tracker/vendor/symfony/mailer/Transport/Smtp/SmtpTransport.php(138): Symfony\\Component\\Mailer\\Transport\\AbstractTransport->send()
+#6 /home/codecps/Desktop/tracker/vendor/laravel/framework/src/Illuminate/Mail/Mailer.php(585): Symfony\\Component\\Mailer\\Transport\\Smtp\\SmtpTransport->send()
+#7 /home/codecps/Desktop/tracker/vendor/laravel/framework/src/Illuminate/Mail/Mailer.php(332): Illuminate\\Mail\\Mailer->sendSymfonyMessage()
+#8 /home/codecps/Desktop/tracker/vendor/laravel/framework/src/Illuminate/Mail/Mailer.php(224): Illuminate\\Mail\\Mailer->send()
+#9 /home/codecps/Desktop/tracker/vendor/laravel/framework/src/Illuminate/Mail/MailManager.php(622): Illuminate\\Mail\\Mailer->raw()
+#10 /home/codecps/Desktop/tracker/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(361): Illuminate\\Mail\\MailManager->__call()
+#11 Command line code(1): Illuminate\\Support\\Facades\\Facade::__callStatic()
+#12 {main}
+  thrown at /home/codecps/Desktop/tracker/vendor/symfony/mailer/Transport/Smtp/Stream/SocketStream.php:154)
+[stacktrace]
+#0 {main}
+"} 

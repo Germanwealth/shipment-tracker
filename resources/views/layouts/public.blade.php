@@ -12,6 +12,44 @@
         .bg-nuelcargo-blue { background-color: #003d82; }
         .bg-nuelcargo-orange { background-color: #ff8c00; }
         .hover-lift:hover { transform: translateY(-4px); transition: all 0.3s ease; }
+        .whatsapp-float {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            width: 56px;
+            height: 56px;
+            border-radius: 9999px;
+            background: #25D366;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 24px rgba(0,0,0,0.18);
+            z-index: 60;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .whatsapp-float:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+        }
+        .whatsapp-float span {
+            position: absolute;
+            right: 70px;
+            white-space: nowrap;
+            background: #0f172a;
+            color: #ffffff;
+            font-size: 12px;
+            padding: 6px 10px;
+            border-radius: 9999px;
+            opacity: 0;
+            transform: translateX(6px);
+            pointer-events: none;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+        .whatsapp-float:hover span {
+            opacity: 1;
+            transform: translateX(0);
+        }
     </style>
 </head>
 <body class="bg-white">
@@ -93,10 +131,10 @@
                         <i class="fas fa-map-marker-alt mr-2"></i>Long Beach, California, USA
                     </p>
                     <p class="text-sm text-gray-300 mt-2">
-                        <i class="fas fa-phone mr-2"></i>+1 (562) 555-0000
+                        <i class="fas fa-phone mr-2"></i>+1 (617) 680-6930
                     </p>
                     <p class="text-sm text-gray-300 mt-2">
-                        <i class="fas fa-envelope mr-2"></i>support@nuelcargo.com
+                        <i class="fas fa-envelope mr-2"></i>support@nuellogistics.com
                     </p>
                 </div>
             </div>
@@ -133,5 +171,10 @@
             });
         });
     </script>
+
+    <a href="https://wa.me/16176806930" class="whatsapp-float" aria-label="Chat with customer service on WhatsApp" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-whatsapp text-2xl"></i>
+        <span>WhatsApp Chat</span>
+    </a>
 </body>
 </html>

@@ -217,7 +217,7 @@
             <a href="/" class="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-bold transition">
                 Track Shipment
             </a>
-            <a href="mailto:support@nuelcargo.com" class="border-2 border-white hover:bg-white hover:text-blue-900 text-white px-8 py-3 rounded-lg font-bold transition">
+            <a href="mailto:support@nuellogistics.com" class="border-2 border-white hover:bg-white hover:text-blue-900 text-white px-8 py-3 rounded-lg font-bold transition">
                 Get a Quote
             </a>
         </div>

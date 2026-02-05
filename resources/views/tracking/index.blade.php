@@ -78,7 +78,7 @@
                 <!-- Contact support -->
                 <div class="mt-10 text-center">
                     <p class="text-gray-600">Can't find your tracking code? 
-                        <a href="mailto:support@nuelcargo.com" class="text-blue-600 hover:text-blue-800 font-bold">Contact our support team</a>
+                        <a href="mailto:support@nuellogistics.com" class="text-blue-600 hover:text-blue-800 font-bold">Contact our support team</a>
                     </p>
                 </div>
             </div>
