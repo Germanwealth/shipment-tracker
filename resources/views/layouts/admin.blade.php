@@ -3,16 +3,19 @@
 @section('title', 'Admin Dashboard - Shipment Tracker')
 
 @section('content')
-<div class="flex h-screen bg-gray-100">
+<div class="flex min-h-screen bg-gray-100">
+    <!-- Mobile Overlay -->
+    <div id="admin-overlay" class="fixed inset-0 bg-black/40 hidden z-40 md:hidden"></div>
+
     <!-- Sidebar -->
-    <div class="w-64 bg-gray-900 text-white shadow-lg">
+    <aside id="admin-sidebar" class="fixed inset-y-0 left-0 w-64 bg-gray-900 text-white shadow-lg transform -translate-x-full transition-transform duration-200 ease-out z-50 md:translate-x-0 md:static md:inset-auto">
         <div class="p-6 border-b border-gray-800">
             <h1 class="text-2xl font-bold flex items-center gap-2">
                 <i class="fas fa-box"></i> Shipment Tracker
             </h1>
         </div>
 
-        <nav class="mt-6 px-4">
+        <nav class="mt-6 px-4 pb-6">
             <a href="{{ route('admin.shipments.index') }}" class="block px-4 py-3 rounded-lg {{ request()->routeIs('admin.shipments*') ? 'bg-blue-600' : 'hover:bg-gray-800' }} transition">
                 <i class="fas fa-list mr-2"></i> All Shipments
             </a>
@@ -26,11 +29,22 @@
                 </button>
             </form>
         </nav>
-    </div>
+    </aside>
 
     <!-- Main Content -->
-    <div class="flex-1 overflow-auto">
-        <div class="p-8">
+    <div class="flex-1 w-full">
+        <!-- Mobile Header -->
+        <div class="md:hidden sticky top-0 z-30 bg-white border-b border-gray-200">
+            <div class="px-4 py-3 flex items-center justify-between">
+                <button id="admin-menu-toggle" type="button" class="text-gray-700" aria-label="Open menu" aria-expanded="false" aria-controls="admin-sidebar">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+                <div class="font-semibold text-gray-900">Shipment Tracker</div>
+                <div class="w-6"></div>
+            </div>
+        </div>
+
+        <div class="p-4 sm:p-6 lg:p-8">
             <!-- Header -->
             <div class="mb-8">
                 <h2 class="text-3xl font-bold text-gray-900">@yield('page-title', 'Dashboard')</h2>
@@ -62,4 +76,43 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('extra-js')
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const toggle = document.getElementById('admin-menu-toggle');
+        const sidebar = document.getElementById('admin-sidebar');
+        const overlay = document.getElementById('admin-overlay');
+        if (!toggle || !sidebar || !overlay) return;
+
+        const openMenu = () => {
+            sidebar.classList.remove('-translate-x-full');
+            overlay.classList.remove('hidden');
+            toggle.setAttribute('aria-expanded', 'true');
+        };
+
+        const closeMenu = () => {
+            sidebar.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+            toggle.setAttribute('aria-expanded', 'false');
+        };
+
+        toggle.addEventListener('click', () => {
+            if (sidebar.classList.contains('-translate-x-full')) {
+                openMenu();
+            } else {
+                closeMenu();
+            }
+        });
+
+        overlay.addEventListener('click', closeMenu);
+
+        sidebar.querySelectorAll('a, button').forEach((el) => {
+            el.addEventListener('click', () => {
+                if (window.innerWidth < 768) closeMenu();
+            });
+        });
+    });
+</script>
 @endsection
